@@ -1,0 +1,51 @@
+{
+    "item": {},
+    "inventoryV2": {
+        "saved": [
+            {
+                "productId": 11588338,
+                "inventoryPrepack": [
+                    {
+                        "inventoryId": 53340889,
+                        "productId": 11588338,
+                        "colorId": 422961,
+                        "available": false,
+                        "availableQty": 99999,
+                        "active": false,
+                        "sizeName": null,
+                        "statusCode": 2,
+                        "threshold": 0,
+                        "modifiedOn": null,
+                        "createdOn": null,
+                        "colorListId": 9,
+                        "colorName": "BROWN",
+                        "availableOn": null,
+                        "status": "Out of Stock",
+                        "qty": 99999
+                    }
+                ]
+            }
+        ],
+        "deleted": []
+    },
+    "inventory": {
+        "update": [
+            {
+                "inventoryId": 53340889,
+                "productId": 11588338,
+                "colorId": 422961,
+                "available": false,
+                "availableQty": 99999,
+                "active": false,
+                "sizeName": null,
+                "statusCode": 2,
+                "threshold": 0,
+                "modifiedOn": null,
+                "createdOn": null,
+                "availableOn": null,
+                "status": "Out of Stock"
+            }
+        ]
+    },
+    "productId": 11588338
+}

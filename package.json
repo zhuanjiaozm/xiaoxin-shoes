@@ -1,0 +1,23 @@
+{
+  "name": "xiaoxin-shoes",
+  "version": "1.0.0",
+  "description": "这个比较复杂,想要批量操作别人网站的数据,对方竟然不给我接口,我好气",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhuanjiaozm/xiaoxin-shoes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhuanjiaozm/xiaoxin-shoes/issues"
+  },
+  "homepage": "https://github.com/zhuanjiaozm/xiaoxin-shoes#readme"
+}

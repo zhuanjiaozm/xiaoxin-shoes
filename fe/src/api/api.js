@@ -11,7 +11,7 @@ const update2 = (params) => http.post('update2', params);
 
 // const exportCSV = (params) => http.get(params);
 
-const uploadFile = (url = 'uploadFile', file) => http.uploadFile(url, file);
+const uploadFile = (url = 'uploadFile', file, isFile) => http.post('upload_excel', file, isFile);
 // 上传文件
 // export const uploadFile = (url, file) => {
 //   const formData = new FormData();

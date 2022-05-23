@@ -8,7 +8,6 @@ var cors = require('cors');
 
 //1.导入路由模块
 const router = require('./router')
-const getItem = require('./2.fashiongo/getItem');
 
 const app = express()
 const port = 3000;

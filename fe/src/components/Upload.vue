@@ -15,14 +15,14 @@ export default {
     uploadConfig(e) {
       let file = e.target.files[0];
 
-      this.$api.uploadFile("uploadFile", file).then((res) => {
+      this.$api.uploadFile(null, file, true).then((res) => {
         if (res) {
           this.$message({
             message: "上传基础数据成功",
             type: "success",
           });
           console.log(res);
-          this.$store.commit("setWeb1Data", res.data);
+          this.$store.commit("setWeb1Data", res);
           // this.$store.commit("setErrorList1", res.data.errorsList);
           // this.$store.commit("setList1", res.data.goodsList);
         }

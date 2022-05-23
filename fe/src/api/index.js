@@ -2,15 +2,19 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 var env = process.env.NODE_ENV;
 
+axios.defaults.withCredentials = true;
+
 // 创建一个 axios 实例
 const request = axios.create({
-    baseURL: env === 'production' ? 'http://fengziqiao.xyz:3000/' : '/api/',
+    baseURL: 'http://fengziqiao.xyz:3000/',
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 10000, // request timeout
     headers: {
-        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded',
         // 'Content-Type': 'application/json',
         'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
     },
 });
 
@@ -56,24 +60,25 @@ const http = {
             params: data,
         });
     },
-    post(url, data) {
-        console.log('urlurlurlurlurlurlurl');
-        return request.post(url, data);
+    post(url = 'upload_excel', data, isUpload) {
+        if (isUpload) {
+            const formData = new FormData();
+            formData.append('file', data);
+            const config = {
+                withCredentials: true, // send cookies when cross-domain requests
+                timeout: 10000, // request timeout
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            };
+            return request.post(url, formData, config);
+        } else {
+            return request.post(url, data);
+        }
     },
     // 上传文件
     uploadFile(url, file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        const config = {
-            baseURL: '/api/', // url = base url + request url
-            withCredentials: true, // send cookies when cross-domain requests
-            timeout: 10000, // request timeout
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: sessionStorage.getItem('token') || '',
-            },
-        };
-        return axios.post('upload_excel', formData, config);
+
     },
 };
 

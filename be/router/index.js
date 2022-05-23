@@ -7,8 +7,9 @@ const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用
 // 2.创建路由对象
 const router = express.Router()
 
-//3.挂载具体的路由
 const itemMap = require('../conifg/2.fashiongo/itemMap.json');
+const getItem = require('../2.fashiongo/getItem');
+
 
 // app.use(express.static('dist'));
 
@@ -22,7 +23,7 @@ router.post('/update2', (req, res) => {
     getItem(data[0].id).then(response => {
         if (response && response.success && response.data) {
             // console.log('获取商品详情:', response.data);
-            res.send(response.data);
+            res.send(response);
         } else {
             return '发生错了'
         }
@@ -61,18 +62,21 @@ router.route("/upload_excel").post(upload.any(), (req, res) => {
     // return res.json({
     //     errorsList, goodsList
     // })
-    return res.json([
-        {
-            label: `1/2 匹配ID成功  ${goodsList.length}  条`,
-            data: goodsList,
-            type: 'success'
-        },
-        {
-            label: `2/2 商品在网站中不存在的  ${errorsList.length}  条`,
-            data: errorsList,
-            type: 'error'
-        }
-    ])
+    return res.json({
+        success: true,
+        data: [
+            {
+                label: `1/2 匹配ID成功  ${goodsList.length}  条`,
+                data: goodsList,
+                type: 'success'
+            },
+            {
+                label: `2/2 商品在网站中不存在的  ${errorsList.length}  条`,
+                data: errorsList,
+                type: 'error'
+            }
+        ]
+    })
 })
 
 // 4.向外导出路由对象

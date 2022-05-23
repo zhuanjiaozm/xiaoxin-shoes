@@ -1,6 +1,7 @@
 // 1.导入express
 const express = require('express')
 const multer = require('multer')
+const xlsx = require('xlsx')
 
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
 // 2.创建路由对象

@@ -2,8 +2,7 @@ const fs = require('fs')
 const express = require('express')
 // const cors = require('cors')
 const bodyParser = require('body-parser')
-const xlsx = require('xlsx')
-const nodeXlsx = require('node-xlsx')   //引用node-xlsx模块
+
 
 var cors = require('cors');
 

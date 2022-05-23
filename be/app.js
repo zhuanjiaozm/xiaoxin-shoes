@@ -22,10 +22,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.js
 
 app.all('*', function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    let ol = config.url.cors.split(',');
+    if (ol.indexOf(req.headers.origin) >= 0) {
+        res.header("Access-Control-Allow-Origin", req.headers.origin);
+        res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+        res.header("Access-Control-Allow-Credentials", "true");
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        res.header("X-Powered-By", ' Express 4.17.1');
+        res.header("Content-Type", "application/json;charset=utf-8");
+    }
     next();
 });
 

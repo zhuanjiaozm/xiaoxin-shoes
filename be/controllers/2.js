@@ -5,7 +5,10 @@ const web2_controller = {
     getInventory: (req, res) => {
         const id = req.params.id;
         getInventoryPromise(id).then(response => {
-            res.send(response && response.data.inventory || [])
+            const data = response && response.data && response.data.inventory || []
+            res.status(200).send({
+                data, success: true
+            })
         })
     },
     login: (req, res) => {

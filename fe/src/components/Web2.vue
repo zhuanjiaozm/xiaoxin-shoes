@@ -24,14 +24,22 @@
         <vxe-column field="id" title="Style ID"></vxe-column>
         <vxe-column field="styleNo" title="Style No"></vxe-column>
         <vxe-column field="item" title="Item"></vxe-column>
-        <vxe-column field="color" title="Color"></vxe-column>
+        <vxe-column title="Color">
+          <template #default="{ row }">
+            <!-- <span :style="{ background: row.color.toLowerCase() }">{{
+              row.color || "无颜色"
+            }}</span> -->
+            {{ row.color }}
+          </template>
+        </vxe-column>
         <vxe-column field="run" title="Run"></vxe-column>
         <vxe-column field="inventory" title="Inventory"></vxe-column>
         <vxe-column title="查看库存">
           <template #default="{ row }">
             <i
+              v-if="row.id"
               :class="[isLoading ? 'vxe-icon--refresh roll' : 'vxe-icon--menu']"
-              @click="getInventory(row.id)"
+              @click="getInventory(row)"
             ></i>
 
             <i
@@ -45,7 +53,7 @@
 
       <vxe-modal
         v-model="showDetails"
-        title="查看详情"
+        :title="`详情[${currenItem.id}]: ${currenItem.styleNo}`"
         width="600"
         height="400"
         :mask="false"
@@ -100,7 +108,7 @@
 </template>
 
 <script>
-// import { update2 } from "@/api/api";
+import { Message } from "element-ui";
 export default {
   name: "Web2",
   data() {
@@ -108,6 +116,7 @@ export default {
       showDetails: false,
       detailData: [],
       isLoading: false,
+      currenItem: {},
     };
   },
   props: {
@@ -120,13 +129,18 @@ export default {
         "_blank"
       ); //注意第二个参数
     },
-    getInventory(id) {
+    getInventory(row) {
+      this.currenItem = row;
       this.isLoading = true;
-      this.$api.getInventory(id).then((res) => {
-        this.showDetails = true;
-        this.isLoading = false;
-        this.detailData = res;
-        console.log("这个规格对应的眼色列表:  ", res);
+      this.$api.getInventory(row.id).then((res) => {
+        if (res && res.success) {
+          this.showDetails = true;
+          this.isLoading = false;
+          this.detailData = res.data;
+          console.log("这个规格对应的眼色列表:  ", res);
+        } else {
+          Message.error("网络请求异常，请稍后重试!");
+        }
       });
     },
     update(data) {

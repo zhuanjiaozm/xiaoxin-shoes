@@ -1,3 +1,5 @@
 fe/node_modules/
 be/node_modules/
 test/node_modules/
+be/.DS_Store
+test/.DS_Store

@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 const { loginApi, username, password } = require('../conifg/2.fashiongo/fashiongo.js');
 
 async function login(data) {

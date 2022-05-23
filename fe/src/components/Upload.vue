@@ -22,7 +22,7 @@ export default {
             type: "success",
           });
           console.log(res);
-          this.$store.commit("setWeb1Data", res);
+          res.success && this.$store.commit("setWeb1Data", res.data);
           // this.$store.commit("setErrorList1", res.data.errorsList);
           // this.$store.commit("setList1", res.data.goodsList);
         }

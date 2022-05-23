@@ -56,20 +56,22 @@ export default {
     };
   },
   mounted() {
-    this.$api.itemMap().then((res) => {
-      var tableData = [];
-      Object.keys(res).forEach((element) => {
-        tableData.push({
-          name: element,
-          key: res[element],
-        });
-      });
-      this.tableData = tableData.splice(7000);
+    this.$api.login2({}).then((res) => {
+      console.log(`服务端的登录结果是:`, res);
     });
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+  },
+  watch: {
+    activeName(newValue, oldValue) {
+      newValue === "fashiongo" &&
+        this.$api.login2({}).then((res) => {
+          console.log(`服务端的登录结果是:`, res);
+        });
+      console.log("newValue:", newValue);
     },
   },
 };

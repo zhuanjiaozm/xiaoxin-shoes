@@ -6,12 +6,12 @@
         :class="{ success: 'text-success', error: 'text-error' }[item.type]"
       >
         <span> {{ item.label }}</span>
-        <vxe-button
+        <!-- <vxe-button
           size="medium"
           content="更新"
           v-if="item.type === 'success'"
           @click="update(item.data)"
-        ></vxe-button>
+        ></vxe-button> -->
       </div>
       <vxe-table
         :data="item.data"
@@ -27,7 +27,74 @@
         <vxe-column field="color" title="Color"></vxe-column>
         <vxe-column field="run" title="Run"></vxe-column>
         <vxe-column field="inventory" title="Inventory"></vxe-column>
+        <vxe-column title="查看库存">
+          <template #default="{ row }">
+            <i
+              :class="[isLoading ? 'vxe-icon--refresh roll' : 'vxe-icon--menu']"
+              @click="getInventory(row.id)"
+            ></i>
+
+            <i
+              :class="'vxe-icon--eye'"
+              v-if="row.id"
+              @click="openPage(row.id)"
+            ></i>
+          </template>
+        </vxe-column>
       </vxe-table>
+
+      <vxe-modal
+        v-model="showDetails"
+        title="查看详情"
+        width="600"
+        height="400"
+        :mask="false"
+        :lock-view="false"
+        resize
+      >
+        <template #default>
+          <vxe-table
+            border="inner"
+            auto-resize
+            show-overflow
+            height="auto"
+            :row-config="{ isHover: true }"
+            :show-header="true"
+            :sync-resize="showDetails"
+            :data="detailData"
+          >
+            <vxe-column field="colorId" title="colorId"></vxe-column>
+            <vxe-column field="colorListId" title="colorListId"></vxe-column>
+            <vxe-column field="colorName" title="colorName"></vxe-column>
+            <vxe-column title="status">
+              <template #default="{ row }">
+                <span
+                  v-if="row && row.sizes[0].status === 'Out of Stock'"
+                  class="red"
+                  >{{ row && row.sizes[0].status }}</span
+                >
+                <span
+                  v-if="row && row.sizes[0].status === 'In Stock'"
+                  class="green"
+                  >{{ row && row.sizes[0].status }}</span
+                >
+              </template>
+            </vxe-column>
+            <vxe-column title="打钩">
+              <template #default="{ row }">
+                <span v-if="row && row.sizes[0].active === false" class="red">{{
+                  row && row.sizes[0].active
+                }}</span>
+                <span
+                  v-if="row && row.sizes[0].active === true"
+                  class="green"
+                  >{{ row && row.sizes[0].active }}</span
+                >
+              </template>
+            </vxe-column>
+          </vxe-table>
+        </template>
+      </vxe-modal>
     </div>
   </div>
 </template>
@@ -36,10 +103,32 @@
 // import { update2 } from "@/api/api";
 export default {
   name: "Web2",
+  data() {
+    return {
+      showDetails: false,
+      detailData: [],
+      isLoading: false,
+    };
+  },
   props: {
     msg: String,
   },
   methods: {
+    openPage(id) {
+      window.open(
+        `https://vendoradmin.fashiongo.net/#/item/detail/${id}`,
+        "_blank"
+      ); //注意第二个参数
+    },
+    getInventory(id) {
+      this.isLoading = true;
+      this.$api.getInventory(id).then((res) => {
+        this.showDetails = true;
+        this.isLoading = false;
+        this.detailData = res;
+        console.log("这个规格对应的眼色列表:  ", res);
+      });
+    },
     update(data) {
       this.$api
         .update2({
@@ -82,5 +171,19 @@ export default {
 }
 .text-error {
   background-color: #ff0000a8;
+}
+.vxe-icon--menu,
+.vxe-icon--eye,
+.vxe-icon--refresh {
+  color: green;
+  cursor: pointer;
+  font-size: 120%;
+  margin-right: 1rem;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
 }
 </style>

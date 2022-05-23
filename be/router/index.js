@@ -7,29 +7,33 @@ const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用
 // 2.创建路由对象
 const router = express.Router()
 
-const itemMap = require('../conifg/2.fashiongo/itemMap.json');
-const getItem = require('../2.fashiongo/getItem');
+const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
+const { getItem } = require('../2.fashiongo/getItem');
+
+router.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        //  这个需要根据自己的业务逻辑来处理（ 具体的err值 请看下面）
+        res.status(401).send('非法token');
+    }
+})
 
 
-// app.use(express.static('dist'));
-
+var web2_controller = require('../controllers/2');
 
 router.get('/itemMap', (req, res) => {
     res.send(itemMap)
 })
 
+router.post('/login2', web2_controller.login)
+router.get('/getInventory/:id', web2_controller.getInventory)
+
 router.post('/update2', (req, res) => {
-    const { data } = req.body;
-    getItem(data[0].id).then(response => {
-        if (response && response.success && response.data) {
-            // console.log('获取商品详情:', response.data);
-            res.send(response);
-        } else {
-            return '发生错了'
-        }
-    }).catch(e => {
-        console.log('登录失败了:', e);
-    });
+    getItem().then(response => {
+        console.log('获取商品详情:', response);
+        res.send({
+            data: response
+        })
+    })
 })
 
 // 上传excel

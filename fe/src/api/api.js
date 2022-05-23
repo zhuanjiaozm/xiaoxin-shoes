@@ -6,6 +6,10 @@ const itemMap = (params) => http.get('itemMap', params);
 
 const update2 = (params) => http.post('update2', params);
 
+const login2 = (params) => http.post('login2', params);
+
+
+const getInventory = (id) => http.get('getInventory/' + id);
 
 // const getCurrentUserInfo = () => http.post('/login/getCurrentUserInfo');
 
@@ -30,7 +34,9 @@ const uploadFile = (url = 'uploadFile', file, isFile) => http.post('upload_excel
 
 
 export default {
+    login2,
     update2,
     itemMap,
-    uploadFile
+    uploadFile,
+    getInventory
 }

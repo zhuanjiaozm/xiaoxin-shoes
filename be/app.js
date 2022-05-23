@@ -16,7 +16,7 @@ var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fe
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
-        console.log('域名:', origin);
+        // console.log('域名:', origin);
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {

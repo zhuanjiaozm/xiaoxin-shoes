@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 
 // 创建一个 axios 实例
 const request = axios.create({
-    baseURL: 'http://fengziqiao.xyz:3000/',
+    // baseURL: 'http://fengziqiao.xyz:3000/',
     // baseURL: 'http://localhost:3000/',
     baseURL: env === 'production' ? 'http://fengziqiao.xyz:3000/' : 'http://localhost:3000/',
     withCredentials: true, // send cookies when cross-domain requests

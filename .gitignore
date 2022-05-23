@@ -3,3 +3,4 @@ be/node_modules/
 test/node_modules/
 be/.DS_Store
 test/.DS_Store
+fe/src/api/index.js

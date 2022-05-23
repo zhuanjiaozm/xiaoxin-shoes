@@ -6,7 +6,6 @@ const xlsx = require('xlsx')
 const nodeXlsx = require('node-xlsx')   //引用node-xlsx模块
 
 var cors = require('cors');
-app.use(cors());
 
 //1.导入路由模块
 const router = require('./router')
@@ -15,7 +14,7 @@ const getItem = require('./2.fashiongo/getItem');
 const app = express()
 const port = 3000;
 
-// app.use(cors())
+app.use(cors())
 app.use(bodyParser.json())  // 解析json数据
 app.use(bodyParser.urlencoded({ extended: true }));
 

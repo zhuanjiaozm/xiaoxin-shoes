@@ -4,7 +4,7 @@ var env = process.env.NODE_ENV;
 
 // 创建一个 axios 实例
 const request = axios.create({
-    baseURL: env === 'production' ? 'http://localhost:3000/' : '/api/',
+    baseURL: env === 'production' ? 'http://fengziqiao.xyz:3000/' : '/api/',
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 10000, // request timeout
     headers: {

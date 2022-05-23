@@ -14,7 +14,7 @@ const getItem = require('./2.fashiongo/getItem');
 const app = express()
 const port = 3000;
 
-var whitelist = ['http://localhost:3000', 'http://fengziqiao.xyz/']
+var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz/']
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {

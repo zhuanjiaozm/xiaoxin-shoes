@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
+var env = process.env.NODE_ENV;
 
 // 创建一个 axios 实例
 const request = axios.create({
-    baseURL: '/api/', // url = base url + request url
+    baseURL: env === 'production' ? 'http://localhost:3000/' : '/api/',
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 10000, // request timeout
     headers: {

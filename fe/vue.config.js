@@ -4,8 +4,6 @@ module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
   devServer: {
-    host: '0.0.0.0',
-    disableHostCheck: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',

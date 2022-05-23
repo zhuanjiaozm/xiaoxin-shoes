@@ -17,6 +17,8 @@ app.use(bodyParser.json())  // 解析json数据
 app.use(bodyParser.urlencoded({ extended: true }));
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
 
+app.use(express.static('dist'));
+
 
 const itemMap = require('./conifg/2.fashiongo/itemMap.json');
 

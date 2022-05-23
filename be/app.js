@@ -12,7 +12,7 @@ const router = require('./router')
 const app = express()
 const port = 3000;
 
-var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'https://fengziqiao.xyz']
+var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fengziqiao.xyz']
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {

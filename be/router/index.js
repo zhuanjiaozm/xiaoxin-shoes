@@ -8,7 +8,6 @@ const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用
 const router = express.Router()
 
 const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
-const { getItem } = require('../2.fashiongo/getItem');
 
 router.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -20,21 +19,18 @@ router.use(function (err, req, res, next) {
 
 var web2_controller = require('../controllers/2');
 
-router.get('/itemMap', (req, res) => {
-    res.send(itemMap)
-})
-
 router.post('/login2', web2_controller.login)
 router.get('/getInventory/:id', web2_controller.getInventory)
+router.post('/update2', web2_controller.update)
 
-router.post('/update2', (req, res) => {
-    getItem().then(response => {
-        console.log('获取商品详情:', response);
-        res.send({
-            data: response
-        })
-    })
-})
+// router.post('/update2', (req, res) => {
+//     getItem().then(response => {
+//         console.log('获取商品详情:', response);
+//         res.send({
+//             data: response
+//         })
+//     })
+// })
 
 // 上传excel
 router.route("/upload_excel").post(upload.any(), (req, res) => {

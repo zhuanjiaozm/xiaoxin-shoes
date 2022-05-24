@@ -6,12 +6,12 @@
         :class="{ success: 'text-success', error: 'text-error' }[item.type]"
       >
         <span> {{ item.label }}</span>
-        <!-- <vxe-button
+        <vxe-button
           size="medium"
           content="更新"
           v-if="item.type === 'success'"
           @click="update(item.data)"
-        ></vxe-button> -->
+        ></vxe-button>
       </div>
       <vxe-table
         :data="item.data"
@@ -53,7 +53,7 @@
 
       <vxe-modal
         v-model="showDetails"
-        :title="`详情[${currenItem.id}]: ${currenItem.styleNo}`"
+        :title="`详情[${currenItem.productId}]: ${currenItem.productName}, Active:${currenItem.active}, Price:${currenItem.sellingPrice}`"
         width="600"
         height="400"
         :mask="false"
@@ -130,13 +130,13 @@ export default {
       ); //注意第二个参数
     },
     getInventory(row) {
-      this.currenItem = row;
       this.isLoading = true;
       this.$api.getInventory(row.id).then((res) => {
         if (res && res.success) {
           this.showDetails = true;
           this.isLoading = false;
-          this.detailData = res.data;
+          this.detailData = (res.data && res.data.inventory) || [];
+          this.currenItem = (res.data && res.data.item) || [];
           console.log("这个规格对应的眼色列表:  ", res);
         } else {
           Message.error("网络请求异常，请稍后重试!");
@@ -150,6 +150,11 @@ export default {
         })
         .then((res) => {
           console.log("更新数据:  ", res);
+          if (!res.response.success) {
+            Message.error(res.response.message || "失败了");
+          } else {
+            Message.success("成功了");
+          }
         });
     },
   },

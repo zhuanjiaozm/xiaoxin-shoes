@@ -4,7 +4,7 @@ import http from './index';
 const itemMap = (params) => http.get('itemMap', params);
 
 
-const update2 = (params) => http.post('update2', params);
+const update2 = (data) => http.post('update2', data);
 
 const login2 = (params) => http.post('login2', params);
 

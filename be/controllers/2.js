@@ -1,13 +1,38 @@
 const { getInventoryPromise, loginPromise, updatePromise } = require('../2.fashiongo/getItem');
+const xlsx = require('xlsx');
+const nodeXlsx = require('node-xlsx')
+const path = require('path');
+const fs = require('fs'); //文件模块
+const moment = require('moment');
+
+
+const json_to_sheet = (arr) => {
+    let result = [];
+    arr.forEach(element => {
+        let row = [];
+        Object.keys(element).map(col => {
+            if (Object.prototype.toString.call(element[col]) !== '[Object Object]') {
+                row.push(element[col])
+            }
+        })
+        result.push(row);
+    });
+    return result;
+}
 
 const handleRequest = (product, getInventoryData) => {
     const { item, inventory: inventoryArray } = getInventoryData;
-    let { active, productId } = item;
+    let { productId } = item;
     const { inventory } = product;
     let inventoryV2 = inventoryArray.find(item => {
         return product.color && product.color === item.colorName;
     });
+    let active = inventoryArray.some((item, index) => {
+        console.log(`第${index}个[${product.id}]active是${item.sizes[0].active}`);
+        return item.sizes && item.sizes[0] && item.sizes[0].active === true;
+    });
 
+    console.log('本来的active:', active);
 
     inventoryV2 = JSON.parse(JSON.stringify(inventoryV2.sizes[0]));
     if (inventory) {
@@ -25,9 +50,11 @@ const handleRequest = (product, getInventoryData) => {
         inventoryV2.available = false;
         active = false;
     }
+    console.log('处理后的active:', active);
+
     return {
         "item": {
-            "active": active,
+            // "active": active,
             "ingredients": "",
             "howtouse": "",
             "weight": null,
@@ -36,7 +63,7 @@ const handleRequest = (product, getInventoryData) => {
             "categoryId": 237,
             "parentCategoryId": 234,
             "parentParentCategoryId": -1,
-            "colorCount": 5
+            "colorCount": inventoryArray.length
         },
         "inventoryV2": {
             "saved": [
@@ -57,21 +84,7 @@ const handleRequest = (product, getInventoryData) => {
         },
         "inventory": {
             "delete": [],
-            "update": [{
-                "inventoryId": inventoryV2.inventoryId,
-                "productId": inventoryV2.productId,
-                "colorId": inventoryV2.colorId,
-                "available": inventoryV2.available,
-                "availableQty": inventoryV2.availableQty,
-                "active": inventoryV2.active,
-                "sizeName": inventoryV2.sizeName,
-                "statusCode": inventoryV2.statusCode,
-                "threshold": inventoryV2.threshold,
-                "modifiedOn": inventoryV2.modifiedOn,
-                "createdOn": inventoryV2.createdOn,
-                "availableOn": inventoryV2.availableOn,
-                "status": inventoryV2.status,
-            }]
+            "update": [inventoryV2]
         },
         "video": null,
         "volumeDiscounts": {
@@ -87,6 +100,15 @@ const handleRequest = (product, getInventoryData) => {
 }
 
 const web2_controller = {
+    download: (req, res) => {
+        const filename = '../' + req.query.fileName;
+        console.log(filename);
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats;charset=utf-8');
+        res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+        // res.setHeader("Content-Disposition", "attachment; filename=" + filename);
+        res.download(path.join(__dirname, filename), filename);
+
+    },
     getInventory: (req, res) => {
         const id = req.params.id;
         getInventoryPromise(id).then(response => {
@@ -98,28 +120,75 @@ const web2_controller = {
     },
     update: (req, res) => {
         const data = req.body.data;
-        const product = data[0];
-        getInventoryPromise(product['id']).then(getInventoryPromiseRes => {
-            const getInventoryData = getInventoryPromiseRes && getInventoryPromiseRes.success && getInventoryPromiseRes.data;
-            updatePromise(handleRequest(product, getInventoryData)).then(response => {
-                res.send({
-                    response,
-                    requestBody: handleRequest(product, getInventoryData),
-                    product,
-                    success: true
+
+        const updatedGoods = [];
+        const errorList = [];
+        let currentIndexForDataList = 0;
+
+        function updatePrice() {
+            const product = data[currentIndexForDataList];
+            if (product) {
+                getInventoryPromise(product['id']).then(getInventoryPromiseRes => {
+                    const getInventoryData = getInventoryPromiseRes && getInventoryPromiseRes.success && getInventoryPromiseRes.data;
+                    const requestBody = handleRequest(product, getInventoryData);
+                    updatePromise(requestBody).then(response => {
+                        console.log('');
+
+                        product.requestBody = requestBody;
+                        if (response.success) {
+                            console.log(`正在更新第${currentIndexForDataList}/${data.length}个:成功`);
+                            updatedGoods.push(product);
+                        } else {
+                            console.log(`正在更新第${currentIndexForDataList}/${data.length}个:失败:${response.message || '发生了错误'}`);
+                            product.message = response.message || '发生了错误';
+                            errorList.push(product);
+                        }
+                        currentIndexForDataList++;
+                        updatePrice();
+                    })
+                });
+            } else {
+                console.log('');
+                console.log(`更新完成${data.length}个,其中成功${updatedGoods.length}个,失败${errorList.length}个`);
+                const time = moment(new Date().getTime()).format('YY-MM-DD_HH:mm:ss');
+                const filename = `${time}_第2个网站数据更新结果.xlsx`;
+
+                var buffer = nodeXlsx.build([
+                    {
+                        name: `全部待更新的数据--${data.length}条数据`,
+                        data: json_to_sheet(data)
+                    },
+                    {
+                        name: `更新成功--${updatedGoods.length}条数据`,
+                        data: json_to_sheet(updatedGoods)
+                    },
+                    {
+                        name: `更新失败--${errorList.length}条数据`,
+                        data: json_to_sheet(errorList)
+                    }
+                ]);
+
+                //写入文件
+                fs.appendFile((filename), buffer, function (err) {
+                    if (err) {
+                        console.log(err, '保存excel出错')
+                    } else {
+                        console.log('更新结果的Excel文件写入成功');
+                    }
                 })
-            })
-        });
+                res.send({
+                    success: true,
+                    data: {
+                        filename,
+                        allDataTouopdate: data,
+                        updatedGoods,
+                        errorList
+                    }
+                })
 
-        // updatePromise().then(response => {
-        //     res.send({
-        //         response,
-        //         // requestBody: handleRequest(product, getInventoryData),
-        //         product,
-        //         success: true
-        //     })
-        // })
-
+            }
+        }
+        updatePrice();
 
     },
     login: (req, res) => {

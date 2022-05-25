@@ -11,6 +11,9 @@ const login2 = (params) => http.post('login2', params);
 
 const getInventory = (id) => http.get('getInventory/' + id);
 
+const download = (fileName) => http.get('download2?fileName=' + fileName);
+
+
 // const getCurrentUserInfo = () => http.post('/login/getCurrentUserInfo');
 
 // const exportCSV = (params) => http.get(params);
@@ -37,6 +40,7 @@ export default {
     login2,
     update2,
     itemMap,
+    download,
     uploadFile,
     getInventory
 }

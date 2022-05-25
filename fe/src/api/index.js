@@ -10,7 +10,7 @@ const request = axios.create({
     // baseURL: 'http://localhost:3000/',
     baseURL: env === 'production' ? 'http://xx.fengziqiao.xyz:3000/' : 'http://localhost:3000/',
     withCredentials: true, // send cookies when cross-domain requests
-    timeout: 10000, // request timeout
+    // timeout: 10000, // request timeout
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         // 'Content-Type': 'application/json',

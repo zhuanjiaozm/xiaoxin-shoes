@@ -22,7 +22,7 @@ const http = axios.create({
 
 // request拦截器,拦截每一个请求加上请求头
 http.interceptors.request.use(config => {
-    console.log('口令global.Authorization:', global.Authorization);
+    // console.log('口令global.Authorization:', global.Authorization);
     // config.headers.post['Content-Type'] = 'application/x-www-fromurlencodeed'
     global.Authorization && (config.headers['Authorization'] = global.Authorization);
     // if (store.state.token) {

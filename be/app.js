@@ -12,11 +12,11 @@ const router = require('./router')
 const app = express()
 const port = 3000;
 
-var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fengziqiao.xyz']
+var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fengziqiao.xyz', undefined]
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
-        // console.log('域名:', origin);
+        console.log('域名:', origin);
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {

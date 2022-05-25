@@ -1,7 +1,8 @@
 // 1.导入express
 const express = require('express')
 const multer = require('multer')
-const xlsx = require('xlsx')
+const xlsx = require('xlsx');
+const path = require('path');
 
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
 // 2.创建路由对象
@@ -22,6 +23,11 @@ var web2_controller = require('../controllers/2');
 router.post('/login2', web2_controller.login)
 router.get('/getInventory/:id', web2_controller.getInventory)
 router.post('/update2', web2_controller.update)
+
+
+router.get('/download2', web2_controller.download)
+
+
 
 // router.post('/update2', (req, res) => {
 //     getItem().then(response => {
@@ -48,10 +54,24 @@ router.route("/upload_excel").post(upload.any(), (req, res) => {
     const workbook = xlsx.read(buffer, { type: "buffer" })
     const sheet = workbook.Sheets[workbook.SheetNames[0]] // 选择第一个工作簿
     const result = xlsx.utils.sheet_to_json(sheet)
-
+    const resultArray = {};
     result.forEach(element => {
         if (itemMap[element.styleNo]) {
             element.id = itemMap[element.styleNo]
+            element.inventoryOrgin = (element.inventory === undefined) ? 10 : element.inventory;
+            const invkey = element.id + '_' + element.color;
+
+            if (resultArray[invkey]) {
+                resultArray[invkey].push(element.inventoryOrgin)
+            } else {
+                resultArray[invkey] = [element.inventoryOrgin];
+            }
+
+            element.inventory = resultArray[invkey].reduce((total, current) => total + current, 0);
+
+
+
+            // element.resultArray = resultArray;
             goodsList.push(element)
         } else {
             errorsList.push(element)

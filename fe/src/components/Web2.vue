@@ -1,5 +1,74 @@
 <template>
   <div class="hello">
+    <div v-if="Object.keys(updateResponseObj).length">
+      <div>
+        总共导入{{
+          updateResponseObj.allDataTouopdate &&
+          updateResponseObj.allDataTouopdate.length
+        }}条,
+        <vxe-button type="text" status="success"
+          >其中成功更新了{{
+            updateResponseObj.updatedGoods &&
+            updateResponseObj.updatedGoods.length
+          }}条,</vxe-button
+        >
+        有{{
+          updateResponseObj.errorList && updateResponseObj.errorList.length
+        }}条更新失败了
+
+        <a
+          :href="
+            'http://localhost:3000/download2?fileName=' +
+            updateResponseObj.filename
+          "
+          target="_blank"
+          >下载更新结果(Excel文件)</a
+        >
+      </div>
+
+      <vxe-table
+        border
+        show-header-overflow
+        show-overflow
+        :row-config="{ isHover: true }"
+        :data="updateErrorsList"
+        v-if="updateErrorsList && updateErrorsList.length"
+      >
+        <vxe-column type="seq" width="60"></vxe-column>
+        <vxe-column field="id" title="Style ID"></vxe-column>
+        <vxe-column field="styleNo" title="Style No"></vxe-column>
+        <!-- <vxe-column field="item" title="Item"></vxe-column> -->
+        <vxe-column title="Color">
+          <template #default="{ row }">
+            <!-- <span :style="{ background: row.color.toLowerCase() }">{{
+              row.color || "无颜色"
+            }}</span> -->
+            {{ row.color }}
+          </template>
+        </vxe-column>
+        <vxe-column field="run" title="Run"></vxe-column>
+
+        <vxe-column field="inventoryOrgin" title="Inventory原始值"></vxe-column>
+        <vxe-column field="inventory" title="Inventory计算结果"></vxe-column>
+        <vxe-column field="message" title="失败原因"></vxe-column>
+        <vxe-column title="查看库存">
+          <template #default="{ row }">
+            <i
+              v-if="row.id"
+              :class="[isLoading ? 'vxe-icon--refresh roll' : 'vxe-icon--menu']"
+              @click="getInventory(row)"
+            ></i>
+
+            <i
+              :class="'vxe-icon--eye'"
+              v-if="row.id"
+              @click="openPage(row.id)"
+            ></i>
+          </template>
+        </vxe-column>
+      </vxe-table>
+    </div>
+
     <div v-for="(item, index) in web1Data" :key="index">
       <div
         class="title"
@@ -8,7 +77,7 @@
         <span> {{ item.label }}</span>
         <vxe-button
           size="medium"
-          content="更新"
+          :content="buttonContent"
           v-if="item.type === 'success'"
           @click="update(item.data)"
         ></vxe-button>
@@ -23,7 +92,7 @@
         <vxe-column type="seq" width="60"></vxe-column>
         <vxe-column field="id" title="Style ID"></vxe-column>
         <vxe-column field="styleNo" title="Style No"></vxe-column>
-        <vxe-column field="item" title="Item"></vxe-column>
+        <!-- <vxe-column field="item" title="Item"></vxe-column> -->
         <vxe-column title="Color">
           <template #default="{ row }">
             <!-- <span :style="{ background: row.color.toLowerCase() }">{{
@@ -33,7 +102,9 @@
           </template>
         </vxe-column>
         <vxe-column field="run" title="Run"></vxe-column>
-        <vxe-column field="inventory" title="Inventory"></vxe-column>
+
+        <vxe-column field="inventoryOrgin" title="Inventory原始值"></vxe-column>
+        <vxe-column field="inventory" title="Inventory计算结果"></vxe-column>
         <vxe-column title="查看库存">
           <template #default="{ row }">
             <i
@@ -117,6 +188,9 @@ export default {
       detailData: [],
       isLoading: false,
       currenItem: {},
+      updateErrorsList: [],
+      updateResponseObj: {},
+      buttonContent: "去更新数据",
     };
   },
   props: {
@@ -143,17 +217,25 @@ export default {
         }
       });
     },
+    download(filename) {
+      this.$api.download(filename).then((res) => {
+        Message.success("下载导入结果成功");
+      });
+    },
     update(data) {
+      this.buttonContent = "正在更新数据中";
       this.$api
         .update2({
           data,
         })
         .then((res) => {
           console.log("更新数据:  ", res);
-          if (!res.response.success) {
-            Message.error(res.response.message || "失败了");
+          this.buttonContent = "去更新数据";
+          if (!res.success) {
+            Message.error(res.message || "失败了");
           } else {
-            Message.success("成功了");
+            Message.success("更新数据成功了");
+            this.updateResponseObj = res.data;
           }
         });
     },

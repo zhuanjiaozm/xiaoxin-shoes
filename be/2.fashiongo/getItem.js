@@ -60,7 +60,6 @@ module.exports = {
         })
     },
     updatePromise: async (product) => {
-        console.log(product);
         // return productInfo;
         // return await http.post(`"https://vendoradmin.fashiongo.net/api/item/save"`, product).then(res => {
         //     return res.data;

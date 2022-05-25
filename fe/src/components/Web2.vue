@@ -16,12 +16,7 @@
           updateResponseObj.errorList && updateResponseObj.errorList.length
         }}条更新失败了
 
-        <a
-          :href="
-            'http://localhost:3000/download2?fileName=' +
-            updateResponseObj.filename
-          "
-          target="_blank"
+        <a :href="baseHref + updateResponseObj.filename" target="_blank"
           >下载更新结果(Excel文件)</a
         >
       </div>
@@ -180,6 +175,7 @@
 
 <script>
 import { Message } from "element-ui";
+var env = process.env.NODE_ENV;
 export default {
   name: "Web2",
   data() {
@@ -191,6 +187,10 @@ export default {
       updateErrorsList: [],
       updateResponseObj: {},
       buttonContent: "去更新数据",
+      baseHref:
+        env === "production"
+          ? "http://xx.fengziqiao.xyz:3000/download2?fileName="
+          : "http://localhost:3000/download2?fileName=",
     };
   },
   props: {

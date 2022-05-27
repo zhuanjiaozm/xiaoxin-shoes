@@ -56,9 +56,9 @@ export default {
     };
   },
   mounted() {
-    this.$api.login2({}).then((res) => {
-      console.log(`服务端的登录结果是:`, res);
-    });
+    // this.$api.login2({}).then((res) => {
+    //   console.log(`服务端的登录结果是:`, res);
+    // });
   },
   methods: {
     handleClick(tab, event) {

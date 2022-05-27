@@ -2,20 +2,17 @@
 const express = require('express')
 const multer = require('multer')
 const xlsx = require('xlsx');
-const path = require('path');
 
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
 // 2.创建路由对象
 const router = express.Router()
 
 const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
+const tokenData = require('../token.json');
+if (tokenData.success) {
+    global.Authorization = `Bearer ${tokenData.data}`;
+}
 
-router.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        //  这个需要根据自己的业务逻辑来处理（ 具体的err值 请看下面）
-        res.status(401).send('非法token');
-    }
-})
 
 
 var web2_controller = require('../controllers/2');

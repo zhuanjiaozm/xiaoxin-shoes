@@ -16,7 +16,7 @@ var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fe
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
-        console.log('域名:', origin);
+        // console.log('域名:', origin);
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
@@ -24,6 +24,11 @@ var corsOptions = {
         }
     }
 }
+
+// process.on('uncaughtException', function (err) {
+//     console.error(err.stack);
+//     console.log("我的天啊");
+// });
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json())  // 解析json数据
@@ -35,5 +40,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router)
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`后端服务启动成功,端口: ${port}`)
 })

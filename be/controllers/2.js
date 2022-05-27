@@ -22,17 +22,17 @@ const json_to_sheet = (arr) => {
 
 const handleRequest = (product, getInventoryData) => {
     const { item, inventory: inventoryArray } = getInventoryData;
-    let { productId } = item;
+    let { productId, categoryId, parentCategoryId, parentParentCategoryId, ingredients, howtouse, weight, mapDropshipProductId, crossSellCount } = item;
     const { inventory } = product;
     let inventoryV2 = inventoryArray.find(item => {
         return product.color && product.color === item.colorName;
     });
     let active = inventoryArray.some((item, index) => {
-        console.log(`第${index}个[${product.id}]active是${item.sizes[0].active}`);
+        console.log(`------第${index}个[${product.id}]active是${item.sizes[0].active}`);
         return item.sizes && item.sizes[0] && item.sizes[0].active === true;
     });
 
-    console.log('本来的active:', active);
+    console.log(`--[${productId}]本来的active: ${active}`);
 
     inventoryV2 = JSON.parse(JSON.stringify(inventoryV2.sizes[0]));
     if (inventory) {
@@ -50,19 +50,18 @@ const handleRequest = (product, getInventoryData) => {
         inventoryV2.available = false;
         active = false;
     }
-    console.log('处理后的active:', active);
-
+    console.log(`--[${productId}]处理后的active: ${active}`);
     return {
         "item": {
-            // "active": active,
-            "ingredients": "",
-            "howtouse": "",
-            "weight": null,
-            "mapDropshipProductId": null,
-            "crossSellCount": null,
-            "categoryId": 237,
-            "parentCategoryId": 234,
-            "parentParentCategoryId": -1,
+            "active": active,
+            "ingredients": ingredients,
+            "howtouse": howtouse,
+            "weight": weight,
+            "mapDropshipProductId": mapDropshipProductId,
+            "crossSellCount": crossSellCount,
+            "categoryId": categoryId,
+            "parentCategoryId": parentCategoryId,
+            "parentParentCategoryId": parentParentCategoryId,
             "colorCount": inventoryArray.length
         },
         "inventoryV2": {
@@ -92,7 +91,7 @@ const handleRequest = (product, getInventoryData) => {
             "deleted": []
         },
         "linkItems": [],
-        "productId": "13815935",
+        "productId": productId,
         "mapDropshipProductId": null,
         "dsSettingInfo": [],
         "vendorSettingInfo": []
@@ -132,8 +131,6 @@ const web2_controller = {
                     const getInventoryData = getInventoryPromiseRes && getInventoryPromiseRes.success && getInventoryPromiseRes.data;
                     const requestBody = handleRequest(product, getInventoryData);
                     updatePromise(requestBody).then(response => {
-                        console.log('');
-
                         product.requestBody = requestBody;
                         if (response.success) {
                             console.log(`正在更新第${currentIndexForDataList}/${data.length}个:成功`);
@@ -143,10 +140,23 @@ const web2_controller = {
                             product.message = response.message || '发生了错误';
                             errorList.push(product);
                         }
+                    }).catch((err) => {
+                        console.log(`正在更新第${currentIndexForDataList}/${data.length}个发生了错误'`);
+                        console.log('catch错误信息', err);
+                        product.message = '更新价格发生了catch错误';
+                        errorList.push(product);
+                    }).finally(() => {
                         currentIndexForDataList++;
                         updatePrice();
-                    })
-                });
+                    });
+                }).catch((err) => {
+                    product.message = '获取商品详情发生错误了哦';
+                    errorList.push(product);
+                    currentIndexForDataList++;
+                    updatePrice();
+                }).finally(() => {
+                    console.log(`获取商品详情完成:${product['id']}`);
+                });;
             } else {
                 console.log('');
                 console.log(`更新完成${data.length}个,其中成功${updatedGoods.length}个,失败${errorList.length}个`);
@@ -199,4 +209,5 @@ const web2_controller = {
     }
 
 };
+
 module.exports = web2_controller;

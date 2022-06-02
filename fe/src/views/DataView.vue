@@ -8,7 +8,6 @@
       </el-table-column>
       <el-table-column prop="remark" label="备注"> </el-table-column>
     </el-table> -->
-    <Upload></Upload>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane name="lashowroom">
         <span slot="label"><i class="el-icon-date"></i> 1.lashowroom</span>
@@ -42,12 +41,12 @@
 // import { login } from "@/api/api";
 import VXETable from "vxe-table";
 import Upload from "@/components/common/Upload.vue";
-import Web1 from "@/components/updateData/Web1";
-import Web2 from "@/components/updateData/Web2";
-import Web3 from "@/components/updateData/Web3";
-import Web4 from "@/components/updateData/Web4";
-import Web5 from "@/components/updateData/Web5";
-import Web6 from "@/components/updateData/Web6";
+import Web1 from "@/components/getData/Web1";
+import Web2 from "@/components/getData/Web2";
+import Web3 from "@/components/getData/Web3";
+import Web4 from "@/components/getData/Web4";
+import Web5 from "@/components/getData/Web5";
+import Web6 from "@/components/getData/Web6";
 export default {
   components: { Web1, Web2, Web3, Web4, Web5, Web6, Upload },
   data() {
@@ -56,29 +55,10 @@ export default {
       activeName: "fashiongo",
     };
   },
-  mounted() {
-    this.login2();
-  },
+  mounted() {},
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
-    },
-    login2() {
-      this.$api.login2({}).then((res) => {
-        console.log(`服务端的登录结果是:`, res.data);
-        if (res && res.success) {
-          localStorage.setItem("token", res.data);
-          VXETable.modal.message({
-            content: `登录成功`,
-            status: "success",
-          });
-        } else {
-          VXETable.modal.message({
-            content: `登录失败`,
-            status: "error",
-          });
-        }
-      });
     },
   },
   watch: {

@@ -4,6 +4,7 @@ const nodeXlsx = require('node-xlsx')
 const path = require('path');
 const fs = require('fs'); //文件模块
 const moment = require('moment');
+const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
 
 
 const json_to_sheet = (arr) => {
@@ -106,8 +107,8 @@ const web2_controller = {
         res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
         // res.setHeader("Content-Disposition", "attachment; filename=" + filename);
         res.download(path.join(__dirname, filename), filename);
-
     },
+
     getInventory: (req, res) => {
         const id = req.params.id;
         getInventoryPromise(id).then(response => {
@@ -117,6 +118,63 @@ const web2_controller = {
             })
         })
     },
+
+    getAllInventory: (req, res) => {
+        const data = [];
+        const promiseArray = [];
+        const inventoryArray = [];
+        const inventoryIDS = [];
+        const errorList = [];
+        const lastId = itemMap[Object.keys(itemMap).pop()];
+        var i = 0;
+        for (const name in itemMap) {
+            i++;
+            if (Object.hasOwnProperty.call(itemMap, name)) {
+                const id = itemMap[name];
+                setTimeout(function timer() {
+                    const p = getInventoryPromise(id).then(response => {
+                        console.log(`第${i}个${id}商品名称${name}响应是: ${response.success}`);
+                        const inventoryRes = response.success && response.data.inventory;
+                        const { sellingPrice } = response.success && response.data.item;
+                        if (inventoryRes) {
+                            inventoryRes.map(item => {
+                                const { sizes, colorName, colorListId } = item;
+                                const { status, inventoryId, productId, availableQty, available, active } = sizes[0];
+                                const temp = {
+                                    name, sizes, colorName, colorListId, status, inventoryId, productId, availableQty, available, active, sellingPrice, item: response.data.item
+                                }
+                                inventoryArray.push(temp);
+                                inventoryIDS.push(id);
+                            });
+                        } else {
+                            errorList.push(id);
+                        }
+                    }).catch(err => {
+                        errorList.push(id);
+                    }).finally(() => {
+                        promiseArray.push(p);
+                        setTimeout(() => {
+                            if (id === lastId) {
+                                Promise.all(promiseArray).then((values) => {
+                                    console.log(`一起处理了${promiseArray.length}个`);
+                                    res.status(200).send({
+                                        success: true,
+                                        data: {
+                                            inventoryArray, errorList, inventoryIDS: Array.from(new Set(inventoryIDS))
+                                        },
+                                    });
+                                });
+                            }
+                        }, 2000);
+                    });
+                }, i * 50);
+            }
+        }
+
+
+
+    },
+
     update: (req, res) => {
         const data = req.body.data;
 
@@ -129,33 +187,40 @@ const web2_controller = {
             if (product) {
                 getInventoryPromise(product['id']).then(getInventoryPromiseRes => {
                     const getInventoryData = getInventoryPromiseRes && getInventoryPromiseRes.success && getInventoryPromiseRes.data;
-                    const requestBody = handleRequest(product, getInventoryData);
-                    updatePromise(requestBody).then(response => {
-                        product.requestBody = requestBody;
-                        if (response.success) {
-                            console.log(`正在更新第${currentIndexForDataList}/${data.length}个:成功`);
-                            updatedGoods.push(product);
-                        } else {
-                            console.log(`正在更新第${currentIndexForDataList}/${data.length}个:失败:${response.message || '发生了错误'}`);
-                            product.message = response.message || '发生了错误';
+                    const requestBody = getInventoryData && product && handleRequest(product, getInventoryData);
+                    if (requestBody) {
+                        updatePromise(requestBody).then(response => {
+                            product.requestBody = requestBody;
+                            if (response.success) {
+                                console.log(`正在更新第${currentIndexForDataList}/${data.length}个:成功`);
+                                updatedGoods.push(product);
+                            } else {
+                                console.log(`正在更新第${currentIndexForDataList}/${data.length}个:失败:${response.message || '发生了错误'}`);
+                                product.message = response.message || '发生了错误';
+                                errorList.push(product);
+                            }
+                        }).catch((err) => {
+                            console.log(`正在更新第${currentIndexForDataList}/${data.length}个发生了错误'`);
+                            console.log('更新价格时候的catch错误信息', err);
+                            product.message = '更新价格发生了catch错误';
                             errorList.push(product);
-                        }
-                    }).catch((err) => {
-                        console.log(`正在更新第${currentIndexForDataList}/${data.length}个发生了错误'`);
-                        console.log('catch错误信息', err);
-                        product.message = '更新价格发生了catch错误';
-                        errorList.push(product);
-                    }).finally(() => {
+                        }).finally(() => {
+                            currentIndexForDataList++;
+                            updatePrice();
+                        });
+                    } else {
                         currentIndexForDataList++;
                         updatePrice();
-                    });
+                    }
                 }).catch((err) => {
                     product.message = '获取商品详情发生错误了哦';
+                    console.log('获取详情时候的catch错误信息', err);
                     errorList.push(product);
                     currentIndexForDataList++;
                     updatePrice();
                 }).finally(() => {
                     console.log(`获取商品详情完成:${product['id']}`);
+                    console.log();
                 });;
             } else {
                 console.log('');
@@ -201,11 +266,32 @@ const web2_controller = {
         updatePrice();
 
     },
+
     login: (req, res) => {
-        loginPromise().then(response => {
-            global.Authorization = `Bearer ${response.data}`;
-            res.send(response && response.data || [])
-        })
+        if (global.Authorization) {
+            res.send({
+                success: true,
+                data: global.Authorization
+            })
+        } else {
+            loginPromise().then(response => {
+                if (response.success) {
+                    console.log('服务端登录成功了');
+                    global.Authorization = `Bearer ${response.data}`;
+                    res.send({
+                        success: true,
+                        data: global.Authorization
+                    })
+                } else {
+                    console.log('登录失败');
+                    res.send({
+                        success: true,
+                        data: ''
+                    })
+                }
+            })
+        }
+
     }
 
 };

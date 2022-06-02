@@ -34,7 +34,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json())  // 解析json数据
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+app.use((req, res, next) => {
+    if (req.headers.authorization) {
+        global.Authorization = req.headers.authorization;
+    }
+    next();
+});
 
 //2.注册路由模块
 app.use(router)

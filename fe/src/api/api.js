@@ -11,6 +11,8 @@ const login2 = (params) => http.post('login2', params);
 
 const getInventory = (id) => http.get('getInventory/' + id);
 
+const getAllInventory = () => http.get('getAllInventory');
+
 const download = (fileName) => http.get('download2?fileName=' + fileName);
 
 
@@ -42,5 +44,6 @@ export default {
     itemMap,
     download,
     uploadFile,
-    getInventory
+    getInventory,
+    getAllInventory
 }

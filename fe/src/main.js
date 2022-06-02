@@ -1,6 +1,6 @@
 import Vue from 'vue';
 // import ElementUI from 'element-ui';
-import { TabPane, Tabs, MessageBox, Message } from 'element-ui';
+import { TabPane, Tabs, MessageBox, Message, MenuItem, Menu, Submenu } from 'element-ui';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -17,8 +17,9 @@ Vue.use(VXETable);
 Vue.config.productionTip = false;
 Vue.use(Tabs);
 Vue.use(TabPane);
-// Vue.use(Tabs);
-// Vue.use(Tabs);
+Vue.use(MenuItem);
+Vue.use(Menu);
+Vue.use(Submenu);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$message = Message;
 

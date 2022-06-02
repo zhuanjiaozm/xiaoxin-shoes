@@ -4,13 +4,15 @@
       <div class="result">
         总共导入:<b class="green">{{updateResponseObj.allDataTouopdate && updateResponseObj.allDataTouopdate.length}}</b>条,
         成功更新:<b class="green">{{updateResponseObj.updatedGoods && updateResponseObj.updatedGoods.length}}</b>条,
-        更新失败:<b class="red">{{ updateResponseObj.errorList && updateResponseObj.errorList.length }}</b>条
+        更新失败:<b class="red">{{ updateResponseObj.errorList && updateResponseObj.errorList.length }}</b>条,
+        实际耗时:<b class="green">{{timer.total}}</b>秒,
+        平均耗时:<b class="green">{{(timer.total / web1Data[0].data.length).toFixed(2)}}</b>秒,
         <a :href="baseHref + updateResponseObj.filename" target="_blank">
           <vxe-button status="primary" content="下载导出结果" type="text" icon="fa fa-save"></vxe-button>
         </a>
       </div>
 
-      <vxe-table border show-header-overflow show-overflow :row-config="{ isHover: true }" :data="updateResponseObj.errorList" v-if="Object.keys(updateResponseObj).length">
+      <vxe-table border show-header-overflow show-overflow max-height="700" :row-config="{ isHover: true }" :data="updateResponseObj.errorList" v-if="Object.keys(updateResponseObj).length">
         <vxe-column type="seq" width="60" />
         <vxe-column field="id" title="Style ID" />
         <vxe-column field="styleNo" title="Style No" />
@@ -47,7 +49,7 @@
       <div v-for="(item, index) in web1Data" :key="index">
         <div class="title" :class="{ success: 'text-success', error: 'text-error' }[item.type]">
           <span> {{ item.label }}</span>
-          <vxe-button size="medium" :content="buttonContent" v-if="item.type === 'success'" @click="update(item.data)" />
+          <vxe-button size="medium" :content="buttonContent ||  `去更新数据(大约需要${parseInt(item.data.length * 4.5,10)}秒)`" v-if="item.type === 'success'" @click="updateHandle(item.data,parseInt(item.data.length * 4.5,10))" />
         </div>
         <vxe-table :data="item.data" stripe border max-height="700" :row-config="{ isCurrent: true, isHover: true }">
           <vxe-column type="seq" width="60" />
@@ -119,13 +121,18 @@ export default {
   name: "Web2",
   data() {
     return {
+      inventoryArray: [],
+      inventoryIDS: [],
+      inventoryArrayErrorList: [],
+      inventoryDisabled: false,
       showDetails: false,
       detailData: [],
       isLoading: false,
       currenItem: {},
       updateErrorsList: [],
       updateResponseObj: {},
-      buttonContent: "去更新数据",
+      buttonContent: "",
+      timer: {},
       baseHref:
         env === "production"
           ? "http://xx.fengziqiao.xyz:3000/download2?fileName="
@@ -136,6 +143,26 @@ export default {
     msg: String,
   },
   methods: {
+    // 通用行合并函数（将相同多列数据合并为一行）
+    mergeRowMethod({ row, _rowIndex, column, visibleData }) {
+      const fields = ["productId", "name"];
+      const cellValue = row[column.property];
+      if (cellValue && fields.includes(column.property)) {
+        const prevRow = visibleData[_rowIndex - 1];
+        let nextRow = visibleData[_rowIndex + 1];
+        if (prevRow && prevRow[column.property] === cellValue) {
+          return { rowspan: 0, colspan: 0 };
+        } else {
+          let countRowspan = 1;
+          while (nextRow && nextRow[column.property] === cellValue) {
+            nextRow = visibleData[++countRowspan + _rowIndex];
+          }
+          if (countRowspan > 1) {
+            return { rowspan: countRowspan, colspan: 1 };
+          }
+        }
+      }
+    },
     openPage(id) {
       window.open(
         `https://vendoradmin.fashiongo.net/#/item/detail/${id}`,
@@ -155,20 +182,56 @@ export default {
         }
       });
     },
+    getAllInventory(row) {
+      this.inventoryDisabled = true;
+      this.inventoryArray = [];
+      this.inventoryIDS = [];
+      this.inventoryArrayErrorList = [];
+      this.$api
+        .getAllInventory()
+        .then((res) => {
+          VXETable.modal.message({
+            content: `获取库存数据成功了`,
+            status: "success",
+          });
+          if (res.success) {
+            this.inventoryArray = res.data.inventoryArray;
+            this.inventoryIDS = res.data.inventoryIDS;
+            this.inventoryArrayErrorList = res.data.errorList;
+          }
+        })
+        .finally(() => {
+          this.inventoryDisabled = false;
+        });
+    },
     download(filename) {
       this.$api.download(filename).then((res) => {
         Message.success("下载导入结果成功");
       });
     },
-    update(data) {
+    updateHandle(data, timerAll) {
       this.buttonContent = "正在更新数据中";
+      var timerAllTimer = setInterval(() => {
+        if (timerAll > 0) {
+          timerAll--;
+          this.buttonContent = `正在更新数据中, 理论上大约还需要${timerAll}秒`;
+        } else {
+          this.buttonContent = `正在更新数据中, 理论上时间差不多了,再耐心等等吧`;
+        }
+      }, 1000);
+
+      const time1 = new Date().valueOf();
       this.$api
         .update2({
           data,
         })
         .then((res) => {
-          console.log("更新数据:  ", res);
-          this.buttonContent = "去更新数据";
+          const time2 = new Date().valueOf();
+          this.timer = {
+            total: parseInt((time2 - time1) / 1000, 10),
+          };
+          console.log("更新数据:  ", time2 - this.time1);
+          this.buttonContent = "去更新数据" + (time2 - this.time1);
           if (!res.success) {
             Message.error(res.message || "失败了");
           } else {
@@ -178,6 +241,10 @@ export default {
             });
             this.updateResponseObj = res.data;
           }
+        })
+        .finally(() => {
+          console.log("清理定时器");
+          clearInterval(timerAllTimer);
         });
     },
   },

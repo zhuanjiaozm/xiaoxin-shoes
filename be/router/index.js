@@ -8,17 +8,17 @@ const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用
 const router = express.Router()
 
 const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
-const tokenData = require('../token.json');
-if (tokenData.success) {
-    global.Authorization = `Bearer ${tokenData.data}`;
-}
+
 
 
 
 var web2_controller = require('../controllers/2');
 
+
 router.post('/login2', web2_controller.login)
 router.get('/getInventory/:id', web2_controller.getInventory)
+router.get('/getAllInventory', web2_controller.getAllInventory)
+
 router.post('/update2', web2_controller.update)
 
 

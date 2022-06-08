@@ -3,11 +3,12 @@
 
     <div class="operation">
       <vxe-button status="danger" :loading="inventoryDisabled" content="获取所有商品颜色的库存信息" @click="getAllInventory"></vxe-button>
+      <vxe-button status="success" :loading="inventoryDisabled" content="获取网站所有商品列表" @click="getBasicActiveDataByPage"></vxe-button>
       <div v-if="inventoryArrayErrorList.length||inventoryArray.length" class="count">
         <div class="info">
           <span class="green"> 成功了{{inventoryIDS.length}}个,</span>
           <span class="red">失败了{{inventoryArrayErrorList.length}}个</span>
-          <span class="red" v-if="inventoryArrayErrorList.length">,{{inventoryArrayErrorList}}</span>
+          <span class="red" v-if="inventoryArrayErrorList.length"></span>
         </div>
         <vxe-button @click="exportDataEvent">导出成功的数据({{inventoryIDS.length}}条)</vxe-button>
       </div>
@@ -44,6 +45,20 @@
           <p>恭喜你 没有发生错误哦 </p>
         </span>
       </template>
+    </vxe-table>
+
+    <vxe-table border show-header-overflow show-overflow max-height="700" :row-config="{ isHover: true }" :data="allGoodsList" v-if="allGoodsList && allGoodsList.length" ref="xTable2">
+      <vxe-column type="seq" width="60" />
+      <vxe-column field="productId" title="Style ID" />
+      <vxe-column field="productName" title="Style No" />
+      <vxe-column field="sellingPrice" title="Price" />
+      <vxe-column field="active" title="Active" />
+      <vxe-column title="查看库存">
+        <template #default="{ row }">
+          <i v-if="row.productId" :class="[isLoading ? 'vxe-icon--refresh roll' : 'vxe-icon--menu']" @click="getInventory(row)" />
+          <i :class="'vxe-icon--eye'" v-if="row.productId" @click="openPage(row.productId)" />
+        </template>
+      </vxe-column>
     </vxe-table>
 
     <vxe-modal v-model="showDetails" :title="`详情[${currenItem.productId}]: ${currenItem.productName}, Active:${currenItem.active}, Price:${currenItem.sellingPrice}`" width="600" height="400" :mask="false" :lock-view="false" resize>
@@ -100,6 +115,7 @@ export default {
       updateResponseObj: {},
       buttonContent: "",
       timer: {},
+      allGoodsList: [],
       baseHref:
         env === "production"
           ? "http://xx.fengziqiao.xyz:3000/download2?fileName="
@@ -153,11 +169,36 @@ export default {
         }
       });
     },
+    getBasicActiveDataByPage() {
+      this.isLoading = true;
+      this.inventoryDisabled = true;
+      this.$api
+        .getBasicActiveDataByPage()
+        .then((res) => {
+          if (res && res.success) {
+            this.isLoading = false;
+            this.allGoodsList = res.data && res.data;
+            VXETable.modal.message({
+              content: `获取全量商品成功`,
+              status: "success",
+            });
+          } else {
+            VXETable.modal.message({
+              content: `获取全量商品失败`,
+              status: "error",
+            });
+          }
+        })
+        .finally(() => {
+          this.inventoryDisabled = false;
+        });
+    },
     getAllInventory(row) {
       this.inventoryDisabled = true;
       this.inventoryArray = [];
       this.inventoryIDS = [];
       this.inventoryArrayErrorList = [];
+      this.allGoodsList = [];
       this.$api
         .getAllInventory()
         .then((res) => {

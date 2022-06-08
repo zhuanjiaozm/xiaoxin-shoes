@@ -1,12 +1,11 @@
-const { getInventoryPromise, loginPromise, updatePromise, getBasicActiveDataByPagePromise, getBasicInactiveDataByPagePromise, getItem } = require('../2.fashiongo/getItem');
+const { getInventoryPromise, loginPromise, updatePromise, getBasicActiveDataByPagePromise, getBasicInactiveDataByPagePromise } = require('../2.fashiongo/getItem');
 const xlsx = require('xlsx');
 const nodeXlsx = require('node-xlsx')
 const path = require('path');
 const fs = require('fs'); //文件模块
-const { Worker, workerData } = require("worker_threads");
 const moment = require('moment');
 const { dataObject } = require('../data/2.fashiongo/dataObject.json');
-let idsIndex = 0;
+
 
 const json_to_sheet = (arr) => {
     let result = [];
@@ -103,10 +102,10 @@ const handleRequest = (product, getInventoryData) => {
 
 
 
-
 const handleData = async (req, res) => {
     var pages1 = Array.from(Array(16), (v, k) => k + 1);
     var pages2 = Array.from(Array(25), (v, k) => k + 1);
+
     const promiseArray1 = await pages1.map(pn => {
         const p = getBasicActiveDataByPagePromise(pn).then(response => {
             if (response && response.data && response.data.records) {
@@ -117,14 +116,12 @@ const handleData = async (req, res) => {
                     }
                 });
             }
-
         }).catch(err => {
-            console.log('分页获取激活的商品列表发生错误: ', err);
-            console.log('');
         }).finally(() => {
         });
         return p;
     });
+
     const promiseArray2 = await pages2.map(pn => {
         const p = getBasicInactiveDataByPagePromise(pn).then(response => {
             if (response && response.data && response.data.records) {
@@ -136,16 +133,15 @@ const handleData = async (req, res) => {
                 });
             }
         }).catch(err => {
-            console.log('分页获取未激活的商品列表发生错误: ', err);
-            console.log('');
         }).finally(() => {
         });
         return p;
     });
+
+
     Promise.all([...promiseArray1, ...promiseArray2]).then((values) => {
         const data = [];
         const dataObject = {};
-        console.log(values);
         values.forEach(request => {
             request && request.forEach(record => {
                 if (record.productId) {
@@ -173,6 +169,7 @@ const handleData = async (req, res) => {
             data
         });
     });
+
 }
 
 
@@ -197,60 +194,58 @@ const web2_controller = {
         })
     },
 
-    getAllInventory: async (req, res) => {
-        console.time('testForEach');
-        var responseData = [];
-        var data = Object.keys(dataObject);
-        console.log(`总共需要查询: ${data.length}个商品的库存信息`);
-        var groups = [];
-        for (var i = 0, len = data.length; i < len; i += 10) {
-            groups.push(data.slice(i, i + 10));
+    getAllInventory: (req, res) => {
+        const data = [];
+        const promiseArray = [];
+        const inventoryArray = [];
+        const inventoryIDS = [];
+        const errorList = [];
+
+        const ids = Object.keys(dataObject);
+        const lastId = ids[ids.length - 1];
+        console.log('lastId: ', lastId);
+
+        for (let i = 0; i < ids.length; i++) {
+            setTimeout(function timer() {
+                const id = ids[i];
+                const name = dataObject[id].productName;
+                const p = getInventoryPromise(id).then(response => {
+                    console.log(`第${i}个${id}商品名称${name}响应是: ${response.success}`);
+                    const inventoryRes = response.success && response.data.inventory;
+                    const { sellingPrice } = response.success && response.data.item;
+                    if (inventoryRes) {
+                        inventoryRes.map(item => {
+                            const { sizes, colorName, colorListId } = item;
+                            const { status, inventoryId, productId, availableQty, available, active } = sizes[0];
+                            const temp = {
+                                name, sizes, colorName, colorListId, status, inventoryId, productId, availableQty, available, active, sellingPrice
+                            }
+                            inventoryArray.push(temp);
+                            inventoryIDS.push(id);
+                        });
+                    } else {
+                        errorList.push(id);
+                    }
+                }).catch(err => {
+                    errorList.push(id);
+                }).finally(() => {
+                    promiseArray.push(p);
+                    setTimeout(() => {
+                        if (id === lastId) {
+                            Promise.all(promiseArray).then((values) => {
+                                console.log(`一起处理了${promiseArray.length}个`);
+                                res.status(200).send({
+                                    success: true,
+                                    data: {
+                                        inventoryArray, errorList, inventoryIDS: Array.from(new Set(inventoryIDS))
+                                    },
+                                });
+                            });
+                        }
+                    }, 5000);
+                });
+            }, i * 1000);
         }
-
-        console.log('总共分组:', groups.length);
-
-        await groups.map((item, index) => {
-            const worker = new Worker(__dirname + "/getInventory.js");
-            worker.on("message", (result) => {
-                console.log(index + '子进程返回的结果是result: ', result.length);
-                responseData.push(result);
-                if (responseData.length === groups.length) {
-                    console.log(`处理完毕 开始返回数据: ${responseData.length}`);
-                    console.timeEnd('testForEach');
-
-                    var buffer = nodeXlsx.build([
-                        {
-                            name: `全部待更新的数据--${data.length}条数据`,
-                            data: _.flattenDeep(responseData)
-                        }
-                    ]);
-
-                    //写入文件
-                    fs.appendFile(('商品库存查询结果.xlsx'), buffer, function (err) {
-                        if (err) {
-                            console.log(err, '保存excel出错')
-                        } else {
-                            console.log('更新结果的Excel文件写入成功');
-                        }
-                    })
-                    res.status(200).send({
-                        data: responseData,
-                        success: true
-                    })
-
-                }
-            });
-
-            worker.on("error", (result) => {
-                console.log('子进程发生了错误: ', result);
-            });
-            worker.postMessage(item);
-        })
-
-
-
-
-
     },
 
     getBasicActiveDataByPage: (req, res) => {

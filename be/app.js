@@ -1,10 +1,23 @@
-const fs = require('fs')
-const express = require('express')
-// const cors = require('cors')
-const bodyParser = require('body-parser')
+const fs = require('fs');
+const express = require('express');
+const schedule = require('node-schedule');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const compression = require('compression');
+const moment = require('moment');
+const { job2 } = require('./jobs/job2')
 
 
-var cors = require('cors');
+// 定义规则
+let rule = new schedule.RecurrenceRule();
+rule.hour = [0, 6, 12, 18]; // 每隔6小时执行
+// rule.second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]; // 每隔1秒执行
+
+// 启动任务
+let job = schedule.scheduleJob(rule, () => {
+    job2();
+});
+
 
 //1.导入路由模块
 const router = require('./router')
@@ -31,7 +44,8 @@ var corsOptions = {
 // });
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json())  // 解析json数据
+app.use(compression());
+app.use(bodyParser.json()); // 解析json数据
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
@@ -45,5 +59,6 @@ app.use((req, res, next) => {
 app.use(router)
 
 app.listen(port, () => {
-    console.log(`后端服务启动成功,端口: ${port}`)
+    const time = moment(new Date().getTime()).format('YY-MM-DD_HH:mm:ss');
+    console.log(`${time}后端服务启动成功,端口: ${port}`)
 })

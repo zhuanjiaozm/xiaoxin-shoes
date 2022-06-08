@@ -24,6 +24,10 @@ const http = axios.create({
 http.interceptors.request.use(config => {
     // console.log('口令global.Authorization:', global.Authorization);
     // config.headers.post['Content-Type'] = 'application/x-www-fromurlencodeed'
+    if (!global.Authorization) {
+        global.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ2ZW5kb3JUeXBlIjoxLCJkc1ZlbmRvcklkIjpudWxsLCJyb2xlIjoiVmVuZG9yQWRtaW4iLCJkc1ZlbmRvclR5cGUiOm51bGwsImRzUmVzb3VyY2VzIjoiIiwicmVzb3VyY2VzIjoiSXRlbXMsIE9yZGVycywgU3RhdGlzdGljcywgUGhvdG8gU3R1ZGlvIiwidXNlck5hbWUiOiJmYXNoaW9uZW1wb3JpbzEiLCJ3aG9sZXNhbGVySWQiOjYzNTUsImF1ZCI6IndlYiIsImdyb3VwSWRzIjpudWxsLCJndWlkIjoiQ0E3ODQzNzQtRjBDNC00Q0MzLUE1Q0YtNDc4OEI0MDY4NzYzIiwic2VjdXJpdHlVc2VySWQiOm51bGwsImlzT3JkZXJTdGF0dXNNYW5hZ2VtZW50IjpmYWxzZSwiZXhwIjoxNjU0NzgxNzg3LCJzZWN1cml0eVVzZXJSb2xlIjpudWxsfQ.A7c9qHp98cYgW553czhayM5hRiPHT3T2YvNfODw90DOXiEctRxmry0KkW_DZl4vlIqW3Vs35wUcN9LkCwDzXpQ';
+    }
+
     global.Authorization && (config.headers['Authorization'] = global.Authorization);
     // if (store.state.token) {
     //     // console.log('token存在') // 如果token存在那么每个请求头里面全部加上token

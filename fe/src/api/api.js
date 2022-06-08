@@ -13,6 +13,8 @@ const getInventory = (id) => http.get('getInventory/' + id);
 
 const getAllInventory = () => http.get('getAllInventory');
 
+const getBasicActiveDataByPage = () => http.get('getBasicActiveDataByPage');
+
 const download = (fileName) => http.get('download2?fileName=' + fileName);
 
 
@@ -45,5 +47,6 @@ export default {
     download,
     uploadFile,
     getInventory,
-    getAllInventory
+    getAllInventory,
+    getBasicActiveDataByPage
 }

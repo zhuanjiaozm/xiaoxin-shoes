@@ -1,1 +1,7 @@
-{}
+{
+    "ignore": [
+        "jobs/data2/库存数据/*.json",
+        "jobs/data2/商品数据/*.json",
+        "jobs/data2/*.json"
+    ]
+}

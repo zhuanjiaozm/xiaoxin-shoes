@@ -7,9 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用
 // 2.创建路由对象
 const router = express.Router()
 
-const itemMap = require('../service/conifg/2.fashiongo/itemMap.json');
-
-
+const { dataObject } = require('../data/2.fashiongo/dataObject.json');
 
 
 var web2_controller = require('../controllers/2');
@@ -18,6 +16,7 @@ var web2_controller = require('../controllers/2');
 router.post('/login2', web2_controller.login)
 router.get('/getInventory/:id', web2_controller.getInventory)
 router.get('/getAllInventory', web2_controller.getAllInventory)
+router.get('/getBasicActiveDataByPage', web2_controller.getBasicActiveDataByPage)
 
 router.post('/update2', web2_controller.update)
 
@@ -53,8 +52,8 @@ router.route("/upload_excel").post(upload.any(), (req, res) => {
     const result = xlsx.utils.sheet_to_json(sheet)
     const resultArray = {};
     result.forEach(element => {
-        if (itemMap[element.styleNo]) {
-            element.id = itemMap[element.styleNo]
+        if (dataObject[element.styleNo]) {
+            element.id = dataObject[element.styleNo]
             element.inventoryOrgin = (element.inventory === undefined) ? 10 : element.inventory;
             const invkey = element.id + '_' + element.color;
 

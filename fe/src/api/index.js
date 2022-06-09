@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 const request = axios.create({
     // baseURL: 'http://fengziqiao.xyz:3000/',
     // baseURL: 'http://localhost:3000/',
-    baseURL: env === 'production' ? 'http://xx.fengziqiao.xyz:3000/' : 'http://localhost:3000/',
+    baseURL: env === 'production' ? 'http://awsus.fengziqiao.xyz:3000/' : 'http://localhost:3000/',
     withCredentials: true, // send cookies when cross-domain requests
     // timeout: 10000, // request timeout
     headers: {

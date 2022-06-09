@@ -81,7 +81,7 @@ module.exports = {
     },
 
     loginByAxios: async function () {
-        return await http.get('https://vendoradmin.fashiongo.net/api/login', {
+        return await http.post('https://vendoradmin.fashiongo.net/api/login', {
             "username": "fashionemporio1",
             "password": "shoes8",
             "app": false
@@ -101,7 +101,6 @@ module.exports = {
             }
         })
     },
-
 
     getBasicActiveDataByPagePromiseByAxios: async function (pn) {
         return await http.get(`https://vendoradmin.fashiongo.net/api/items?pn=${pn}&ps=180&orderBy=activatedOn&pageNo=1&pageSize=20&active=true&backUrl=;apn=4;ipn=1;pages=active`).then(res => {
@@ -222,7 +221,6 @@ module.exports = {
     },
 
     loginPromise: async function () {
-        console.time('登录获取token');
         const response = await fetch("https://vendoradmin.fashiongo.net/api/login", {
             "headers": {
                 "accept": "application/json",
@@ -241,6 +239,32 @@ module.exports = {
             "referrerPolicy": "strict-origin-when-cross-origin",
             "body": "{\"username\":\"fashionemporio1\",\"password\":\"shoes8\",\"app\":false}",
             "method": "POST",
+            "mode": "cors",
+            "credentials": "include"
+        });
+        return response.json();
+    },
+
+    sendMessage: async function (data) {
+        const { title, content } = data;
+        const url = `https://sctapi.ftqq.com/SCT66532Tp2XMTGSaLCjrI9yVfZEvW7ZA.send?title=${title}&desp=${content}`;
+        const response = await fetch(url, {
+            "headers": {
+                "accept": "application/json",
+                "accept-language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+                "cache-control": "no-cache",
+                "content-type": "text/plain",
+                "pragma": "no-cache",
+                "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Google Chrome\";v=\"102\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"macOS\"",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin"
+            },
+            "referrerPolicy": "strict-origin-when-cross-origin",
+            // "body": JSON.stringify(data),
+            "method": "GET",
             "mode": "cors",
             "credentials": "include"
         });

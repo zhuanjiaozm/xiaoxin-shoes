@@ -1,8 +1,9 @@
 // 1.导入express
 const express = require('express')
 const multer = require('multer')
-const xlsx = require('xlsx');
-
+const xlsx = require('node-xlsx');
+const fs = require('fs');
+const path = require('path');
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
 // 2.创建路由对象
 const router = express.Router()
@@ -12,27 +13,22 @@ const { dataObject } = require('../data/2.fashiongo/dataObject.json');
 
 var web2_controller = require('../controllers/2');
 
+router.post('/login2', web2_controller.login);
 
-router.post('/login2', web2_controller.login)
-router.get('/getInventory/:id', web2_controller.getInventory)
-router.get('/getAllInventory', web2_controller.getAllInventory)
-router.get('/getBasicActiveDataByPage', web2_controller.getBasicActiveDataByPage)
+router.get('/getInventory/:id', web2_controller.getInventory);
 
-router.post('/update2', web2_controller.update)
+router.get('/getProductList', web2_controller.getProductList);
 
+router.get('/getAllInventory', web2_controller.getAllInventory);
 
-router.get('/download2', web2_controller.download)
+router.get('/getBasicActiveDataByPage', web2_controller.getBasicActiveDataByPage);
 
+router.post('/update2', web2_controller.update);
 
+router.get('/download2', web2_controller.download);
 
-// router.post('/update2', (req, res) => {
-//     getItem().then(response => {
-//         console.log('获取商品详情:', response);
-//         res.send({
-//             data: response
-//         })
-//     })
-// })
+// 下载Excel文件
+router.get('/exportExcel', web2_controller.exportExcel);
 
 // 上传excel
 router.route("/upload_excel").post(upload.any(), (req, res) => {

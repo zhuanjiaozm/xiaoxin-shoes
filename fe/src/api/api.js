@@ -8,6 +8,7 @@ const update2 = (data) => http.post('update2', data);
 
 const login2 = (params) => http.post('login2', params);
 
+const getProductList = (flag) => http.get('getProductList', { flag });
 
 const getInventory = (id) => http.get('getInventory/' + id);
 
@@ -17,6 +18,8 @@ const getBasicActiveDataByPage = () => http.get('getBasicActiveDataByPage');
 
 const download = (fileName) => http.get('download2?fileName=' + fileName);
 
+
+const exportExcel = () => http.get('exportExcel', {}, 'arraybuffer');
 
 // const getCurrentUserInfo = () => http.post('/login/getCurrentUserInfo');
 
@@ -48,5 +51,7 @@ export default {
     uploadFile,
     getInventory,
     getAllInventory,
+    getProductList,
+    exportExcel,
     getBasicActiveDataByPage
 }

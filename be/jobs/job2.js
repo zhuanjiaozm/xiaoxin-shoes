@@ -2,17 +2,26 @@ const nodeXlsx = require('node-xlsx');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
-const { getBasicInactiveDataByPagePromiseByAxios, getBasicActiveDataByPagePromiseByAxios, getItemByAxios, loginPromise } = require('../2.fashiongo/getItem');
+const { getBasicInactiveDataByPagePromiseByAxios, getBasicActiveDataByPagePromiseByAxios, getItemByAxios, loginPromise, sendMessage } = require('../2.fashiongo/getItem');
 const chalk = require('chalk');
 const inventoryObj = {};
 const errForGetInventory = [];
 
 
 const job2 = async () => {
+    const sendMessageToWeChat = async (data) => {
+        await sendMessage(data).then(res => {
+            return console.log(res.data.pushid);
+        });
+    };
     while (!global.Authorization || global.Authorization.length < 30) {
         const token = await loginPromise().then(res => {
             if (res.success) {
                 console.log(chalk.green('登录成功'));
+                sendMessageToWeChat({
+                    title: '定时任务过程中服务端登录成功',
+                    content: `成功获取到token: ${res.data}`,
+                })
                 return res.data;
             };
         }).catch(err => {
@@ -51,6 +60,12 @@ const job2 = async () => {
                 }
             });
             console.log(chalk.green(`总共查询了${Object.keys(allItems).length}个商品`));
+
+            sendMessageToWeChat({
+                title: '定时任务过程中获取商品列表成功',
+                content: `成功获取到${Object.keys(allItems).length}个商品`,
+            });
+
             //把data对象转换为json格式字符串
             var content = JSON.stringify({
                 allItems
@@ -101,6 +116,7 @@ const job2 = async () => {
                         item.colorAvailable = i.sizes[0].available;
                         item.status = i.sizes[0].status;
                         item.statusCode = i.sizes[0].statusCode;
+                        item.availableQty = i.sizes[0].availableQty;
                         inventoryObj[productId] = item;
                     });
                 }
@@ -111,7 +127,7 @@ const job2 = async () => {
             }).finally(() => {
                 let end_time = moment(new Date().getTime());
                 console.log('');
-                console.log(`第${index + 1}/${allItemsIDs.length}个${item.productName}[${productId}]查询完成,完全这个其请求耗时(秒):${end_time.diff(start_time, 'seconds')
+                console.log(`第${index + 1} /${allItemsIDs.length}个${item.productName}[${productId}]查询完成,完全这个其请求耗时(秒):${end_time.diff(start_time, 'seconds')
                     }`);
                 start_time = end_time;
                 if (index < allItemsIDs.length - 2) {
@@ -120,7 +136,7 @@ const job2 = async () => {
                 } else {
                     const time2 = moment(new Date().getTime());
                     const seconds = time2.diff(time1, "seconds");
-                    console.log(`共查询${allItemsIDs.length}个商品，其中${errForGetInventory.length}个查询失败,耗时${seconds}秒`);
+                    console.log(`共查询${allItemsIDs.length}个商品，其中${errForGetInventory.length}个查询失败, 耗时${seconds}秒`);
                     //把data对象转换为json格式字符串
                     const content = JSON.stringify({
                         inventoryObj,
@@ -173,7 +189,9 @@ const job2 = async () => {
         };
         getInventoryForItem();
     }
+
     getProductList();
+
 }
 
 module.exports = {

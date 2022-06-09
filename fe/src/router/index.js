@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'data',
+    name: '/first',
     component: DataView,
   },
   {

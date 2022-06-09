@@ -187,6 +187,54 @@ const web2_controller = {
         res.download(path.join(__dirname, filename), filename);
     },
 
+    exportExcel: (req, res) => {
+        const { allItems } = require('../jobs/data2/allItems.json');
+        const { inventoryObj } = require('../jobs/data2/inventoryObj.json');
+
+        const data = [
+            ['Style ID', 'Style No', 'Selling Price', 'Active']
+        ];
+        Object.keys(allItems).forEach((productID, index) => {
+            const { productId, productName, sellingPrice, active } = allItems[productID];
+            data.push([productId, productName, sellingPrice, active]);
+        });
+
+
+        const data2 = [
+            ['Style ID', 'Style No', 'Selling Price', 'Active', 'Color Name', 'Status', 'availableQty']
+        ];
+        Object.keys(inventoryObj).forEach((productID) => {
+            const { productId, productName, sellingPrice, active, colorName, status, availableQty } = inventoryObj[productID];
+            data2.push([productId, productName, sellingPrice, active, colorName, status, availableQty]);
+        });
+
+        console.log('Object.keys(inventoryObj): ', Object.keys(inventoryObj).length);
+        console.log('data2.length: ', data2.length);
+
+        var buffer = nodeXlsx.build([
+            {
+                name: `商品列表--${data.length - 1}条数据`,
+                data: data
+            },
+            {
+                name: `库存列表--${data2.length - 1}条数据`,
+                data: data2
+            },
+        ]);
+        const fileName = path.resolve(__dirname, '../jobs/data2/allItems.xlsx');
+        //写入文件
+        fs.appendFile(fileName, buffer, function (err) {
+            if (err) {
+                console.log(err, '保存excel出错')
+            } else {
+                res.download(fileName, '商品和库存列表.xlsx');
+                setTimeout(() => {
+                    fs.unlinkSync(fileName);
+                }, 3000);
+            }
+        });
+    },
+
     getInventory: (req, res) => {
         const id = req.params.id;
         getInventoryPromise(id).then(response => {
@@ -195,6 +243,16 @@ const web2_controller = {
                 data, success: true
             })
         })
+    },
+
+
+    getProductList: (req, res) => {
+        const { allItems } = require('../jobs/data2/allItems.json');
+        const { inventoryObj } = require('../jobs/data2/inventoryObj.json');
+        res.status(200).send({
+            data: req.query.flag === 'false' ? allItems : inventoryObj,
+            success: true
+        });
     },
 
     getAllInventory: async (req, res) => {

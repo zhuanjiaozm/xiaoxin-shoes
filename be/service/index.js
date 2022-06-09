@@ -3,7 +3,7 @@ var axios = require("axios")
 // 创建axios实例s
 const http = axios.create({
     // baseURL: "http://127.0.0.1:8000", // api的base_url  process.env.BASE_API,,注意局域网访问时，不能使用localhost
-    timeout: 20 * 1000, // 请求超时时间
+    timeout: 20 * 10000, // 请求超时时间
     headers: {
         "accept": "application/json",
         "accept-language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -22,11 +22,12 @@ const http = axios.create({
 
 // request拦截器,拦截每一个请求加上请求头
 http.interceptors.request.use(config => {
+    // console.log(global.Authorization);
     // console.log('口令global.Authorization:', global.Authorization);
     // config.headers.post['Content-Type'] = 'application/x-www-fromurlencodeed'
-    if (!global.Authorization) {
-        global.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ2ZW5kb3JUeXBlIjoxLCJkc1ZlbmRvcklkIjpudWxsLCJyb2xlIjoiVmVuZG9yQWRtaW4iLCJkc1ZlbmRvclR5cGUiOm51bGwsImRzUmVzb3VyY2VzIjoiIiwicmVzb3VyY2VzIjoiSXRlbXMsIE9yZGVycywgU3RhdGlzdGljcywgUGhvdG8gU3R1ZGlvIiwidXNlck5hbWUiOiJmYXNoaW9uZW1wb3JpbzEiLCJ3aG9sZXNhbGVySWQiOjYzNTUsImF1ZCI6IndlYiIsImdyb3VwSWRzIjpudWxsLCJndWlkIjoiQ0E3ODQzNzQtRjBDNC00Q0MzLUE1Q0YtNDc4OEI0MDY4NzYzIiwic2VjdXJpdHlVc2VySWQiOm51bGwsImlzT3JkZXJTdGF0dXNNYW5hZ2VtZW50IjpmYWxzZSwiZXhwIjoxNjU0NzgxNzg3LCJzZWN1cml0eVVzZXJSb2xlIjpudWxsfQ.A7c9qHp98cYgW553czhayM5hRiPHT3T2YvNfODw90DOXiEctRxmry0KkW_DZl4vlIqW3Vs35wUcN9LkCwDzXpQ';
-    }
+    // if (!global.Authorization) {
+    //     global.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJ2ZW5kb3JUeXBlIjoxLCJkc1ZlbmRvcklkIjpudWxsLCJyb2xlIjoiVmVuZG9yQWRtaW4iLCJkc1ZlbmRvclR5cGUiOm51bGwsImRzUmVzb3VyY2VzIjoiIiwicmVzb3VyY2VzIjoiSXRlbXMsIE9yZGVycywgU3RhdGlzdGljcywgUGhvdG8gU3R1ZGlvIiwidXNlck5hbWUiOiJmYXNoaW9uZW1wb3JpbzEiLCJ3aG9sZXNhbGVySWQiOjYzNTUsImF1ZCI6IndlYiIsImdyb3VwSWRzIjpudWxsLCJndWlkIjoiQ0E3ODQzNzQtRjBDNC00Q0MzLUE1Q0YtNDc4OEI0MDY4NzYzIiwic2VjdXJpdHlVc2VySWQiOm51bGwsImlzT3JkZXJTdGF0dXNNYW5hZ2VtZW50IjpmYWxzZSwiZXhwIjoxNjU0NzgxNzg3LCJzZWN1cml0eVVzZXJSb2xlIjpudWxsfQ.A7c9qHp98cYgW553czhayM5hRiPHT3T2YvNfODw90DOXiEctRxmry0KkW_DZl4vlIqW3Vs35wUcN9LkCwDzXpQ';
+    // }
 
     global.Authorization && (config.headers['Authorization'] = global.Authorization);
     // if (store.state.token) {

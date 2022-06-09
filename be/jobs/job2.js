@@ -1,11 +1,28 @@
 const nodeXlsx = require('node-xlsx');
 const moment = require('moment');
 const path = require('path');
-const fs = require('fs'); //文件模块
-const { getBasicInactiveDataByPagePromiseByAxios, getBasicActiveDataByPagePromiseByAxios, getItemByAxios } = require('../2.fashiongo/getItem');
+const fs = require('fs');
+const { getBasicInactiveDataByPagePromiseByAxios, getBasicActiveDataByPagePromiseByAxios, getItemByAxios, loginPromise } = require('../2.fashiongo/getItem');
+const chalk = require('chalk');
 const inventoryObj = {};
 const errForGetInventory = [];
+
+
 const job2 = async () => {
+    while (!global.Authorization || global.Authorization.length < 30) {
+        const token = await loginPromise().then(res => {
+            if (res.success) {
+                console.log(chalk.green('登录成功'));
+                return res.data;
+            };
+        }).catch(err => {
+            console.log(chalk.red('登录发生错误err:', err));
+        }).finally(() => {
+            console.timeEnd('登录获取token');
+        });
+        global.Authorization = 'Bearer ' + token;
+    }
+
     //  获取网站商品列表
     const getProductList = () => {
         var pages1 = Array.from(Array(16), (v, k) => k + 1);
@@ -33,7 +50,7 @@ const job2 = async () => {
                     console.error('这一页没结果');
                 }
             });
-            console.log(`总共查询了${Object.keys(allItems).length}个商品`);
+            console.log(chalk.green(`总共查询了${Object.keys(allItems).length}个商品`));
             //把data对象转换为json格式字符串
             var content = JSON.stringify({
                 allItems
@@ -90,13 +107,13 @@ const job2 = async () => {
 
             }).catch(error => {
                 errForGetInventory.push(productId);
-                console.log(error);
+                console.log(chalk.red(`${productId}获取库存失败`));
             }).finally(() => {
                 let end_time = moment(new Date().getTime());
+                console.log('');
                 console.log(`第${index + 1}/${allItemsIDs.length}个${item.productName}[${productId}]查询完成,完全这个其请求耗时(秒):${end_time.diff(start_time, 'seconds')
                     }`);
                 start_time = end_time;
-                console.log('');
                 if (index < allItemsIDs.length - 2) {
                     index++;
                     getInventoryForItem();
@@ -142,7 +159,7 @@ const job2 = async () => {
                         if (err) {
                             return console.log(err);
                         }
-                        console.log('文件创建成功，地址：' + file);
+                        console.log('库存信息文件更新成功，地址：' + file);
                     });
                     fs.writeFile(path.join(__dirname, `./data2/inventoryObj.json`), content, function (err) {
                         if (err) {

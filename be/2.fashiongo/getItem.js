@@ -80,6 +80,16 @@ module.exports = {
         })
     },
 
+    loginByAxios: async function () {
+        return await http.get('https://vendoradmin.fashiongo.net/api/login', {
+            "username": "fashionemporio1",
+            "password": "shoes8",
+            "app": false
+        }).then(res => {
+            return res.data;
+        })
+    },
+
     getBasicInactiveDataByPagePromiseByAxios: async function (pn) {
         return await http.get(`https://vendoradmin.fashiongo.net/api/items?pn=${pn}&ps=180&orderBy=lastModified&pageNo=1&pageSize=20&active=false&backUrl=;apn=4;ipn=2;pages=inactive`).then(res => {
             if (res && res.data && res.data.data && res.data.data.records) {
@@ -212,6 +222,7 @@ module.exports = {
     },
 
     loginPromise: async function () {
+        console.time('登录获取token');
         const response = await fetch("https://vendoradmin.fashiongo.net/api/login", {
             "headers": {
                 "accept": "application/json",

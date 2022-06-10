@@ -2,9 +2,9 @@
   <div class="web">
     <div class="header">
       <el-button-group>
-        <el-button type="success" icon="vxe-icon--search" size="small" @click="getProductList()">获取商品列表</el-button>
-        <el-button type="primary" icon="vxe-icon--search" size="small" @click="getProductList(true)">获取库存列表</el-button>
-        <el-button type="warning" icon="vxe-icon--download" size="small" @click="download">下载商品和库存列表</el-button>
+        <el-button type="success" icon="vxe-icon--search" size="small" @click="getProductList()" :loading="isLoading">获取商品列表</el-button>
+        <el-button type="primary" icon="vxe-icon--search" size="small" @click="getProductList(true)" :loading="isLoading">获取库存列表</el-button>
+        <el-button type="warning" icon="vxe-icon--download" size="small" @click="download" :loading="isLoading">下载商品和库存列表</el-button>
       </el-button-group>
     </div>
     <div>
@@ -89,7 +89,7 @@ export default {
           if (keyword === "inactive") {
             keyword = false;
           }
-          return JSON.stringify(item).indexOf(keyword) > -1;
+          return JSON.stringify(item).toLowerCase().indexOf(keyword) > -1;
         } else {
           return true;
         }
@@ -117,6 +117,7 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
+          this.filterName = "";
         });
     },
     openPage(id) {

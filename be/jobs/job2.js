@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { getBasicInactiveDataByPagePromiseByAxios, getBasicActiveDataByPagePromiseByAxios, getItemByAxios, loginPromise, sendMessage } = require('../2.fashiongo/getItem');
 const chalk = require('chalk');
-const inventoryObj = {};
+const allGoodsInventoryArray = [];
 const errForGetInventory = [];
 
 
@@ -117,7 +117,8 @@ const job2 = async () => {
                         item.status = i.sizes[0].status;
                         item.statusCode = i.sizes[0].statusCode;
                         item.availableQty = i.sizes[0].availableQty;
-                        inventoryObj[productId] = item;
+                        item.productId = productId;
+                        allGoodsInventoryArray.push(item);
                     });
                 }
 
@@ -139,7 +140,7 @@ const job2 = async () => {
                     console.log(`共查询${allItemsIDs.length}个商品，其中${errForGetInventory.length}个查询失败, 耗时${seconds}秒`);
                     //把data对象转换为json格式字符串
                     const content = JSON.stringify({
-                        inventoryObj,
+                        allGoodsInventoryArray,
                         errForGetInventory
                     });
                     const time = moment(new Date().getTime()).format('YY-MM-DD_HH:mm:ss');
@@ -153,7 +154,7 @@ const job2 = async () => {
                             }
                             console.log('最终的库存文件创建成功，地址：' + file);
                         });
-                        fs.writeFile(path.join(__dirname, `./data2/inventoryObj.json`), content, function (err) {
+                        fs.writeFile(path.join(__dirname, `./data2/allGoodsInventoryArray.json`), content, function (err) {
                             if (err) {
                                 return console.log(err);
                             }
@@ -164,7 +165,7 @@ const job2 = async () => {
                 }
                 //把data对象转换为json格式字符串
                 const content = JSON.stringify({
-                    inventoryObj,
+                    allGoodsInventoryArray,
                     errForGetInventory
                 });
                 //指定创建目录及文件名称，__dirname为执行当前js文件的目录
@@ -177,7 +178,7 @@ const job2 = async () => {
                         }
                         console.log('库存信息文件更新成功，地址：' + file);
                     });
-                    fs.writeFile(path.join(__dirname, `./data2/inventoryObj.json`), content, function (err) {
+                    fs.writeFile(path.join(__dirname, `./data2/allGoodsInventoryArray.json`), content, function (err) {
                         if (err) {
                             return console.log(err);
                         }

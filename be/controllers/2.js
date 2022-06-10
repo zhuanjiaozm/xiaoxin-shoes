@@ -189,7 +189,7 @@ const web2_controller = {
 
     exportExcel: (req, res) => {
         const { allItems } = require('../jobs/data2/allItems.json');
-        const { inventoryObj } = require('../jobs/data2/inventoryObj.json');
+        const { allGoodsInventoryArray } = require('../jobs/data2/allGoodsInventoryArray.json');
 
         const data = [
             ['Style ID', 'Style No', 'Selling Price', 'Active']
@@ -203,12 +203,12 @@ const web2_controller = {
         const data2 = [
             ['Style ID', 'Style No', 'Selling Price', 'Active', 'Color Name', 'Status', 'availableQty']
         ];
-        Object.keys(inventoryObj).forEach((productID) => {
-            const { productId, productName, sellingPrice, active, colorName, status, availableQty } = inventoryObj[productID];
+        allGoodsInventoryArray.forEach((item) => {
+            const { productId, productName, sellingPrice, active, colorName, status, availableQty } = item;
             data2.push([productId, productName, sellingPrice, active, colorName, status, availableQty]);
         });
 
-        console.log('Object.keys(inventoryObj): ', Object.keys(inventoryObj).length);
+        console.log('allGoodsInventoryArray.length: ', allGoodsInventoryArray.length);
         console.log('data2.length: ', data2.length);
 
         var buffer = nodeXlsx.build([
@@ -247,10 +247,16 @@ const web2_controller = {
 
 
     getProductList: (req, res) => {
-        const { allItems } = require('../jobs/data2/allItems.json');
-        const { inventoryObj } = require('../jobs/data2/inventoryObj.json');
+        const allGoodsInventoryArrayFile = path.resolve(__dirname, '../jobs/data2/allGoodsInventoryArray.json');
+        const allItemsFile = path.resolve(__dirname, '../jobs/data2/allItems.json');
+        delete require.cache[allGoodsInventoryArrayFile];
+        delete require.cache[allItemsFile];
+
+        const { allItems } = require(allItemsFile);
+        const { allGoodsInventoryArray } = require(allGoodsInventoryArrayFile);
+
         res.status(200).send({
-            data: req.query.flag === 'false' ? allItems : inventoryObj,
+            data: req.query.flag === 'false' ? allItems : allGoodsInventoryArray,
             success: true
         });
     },

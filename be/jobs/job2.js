@@ -111,7 +111,7 @@ const job2 = async () => {
                     inventory.forEach(i => {
                         item.colorId = i.colorId;
                         item.colorCode = i.colorCode;
-                        item.colorName = i.colorListId;
+                        item.colorName = i.colorName;
                         item.colorActive = i.sizes[0].active;
                         item.colorAvailable = i.sizes[0].available;
                         item.status = i.sizes[0].status;

@@ -188,8 +188,14 @@ const web2_controller = {
     },
 
     exportExcel: (req, res) => {
-        const { allItems } = require('../jobs/data2/allItems.json');
-        const { allGoodsInventoryArray } = require('../jobs/data2/allGoodsInventoryArray.json');
+        const allGoodsInventoryArrayFile = path.resolve(__dirname, '../jobs/data2/allGoodsInventoryArray.json');
+        const allItemsFile = path.resolve(__dirname, '../jobs/data2/allItems.json');
+        delete require.cache[allGoodsInventoryArrayFile];
+        delete require.cache[allItemsFile];
+
+
+        const { allItems } = require(allItemsFile);
+        const { allGoodsInventoryArray } = require(allGoodsInventoryArrayFile);
 
         const data = [
             ['Style ID', 'Style No', 'Selling Price', 'Active']

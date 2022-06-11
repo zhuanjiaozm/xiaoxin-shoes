@@ -11,13 +11,13 @@ const errForGetInventory = [];
 const job2 = async () => {
     const sendMessageToWeChat = async (data) => {
         await sendMessage(data).then(res => {
-            return console.log(res.data.pushid);
+            return res.data.pushid;
         });
     };
     while (!global.Authorization || global.Authorization.length < 30) {
+        console.time('登录获取token');
         const token = await loginPromise().then(res => {
             if (res.success) {
-                console.log(chalk.green('登录成功'));
                 sendMessageToWeChat({
                     title: '定时任务过程中服务端登录成功',
                     content: `成功获取到token: ${res.data}`,
@@ -26,24 +26,41 @@ const job2 = async () => {
             };
         }).catch(err => {
             console.log(chalk.red('登录发生错误err:', err));
-        }).finally(() => {
+        }).finally((re) => {
             console.timeEnd('登录获取token');
         });
         global.Authorization = 'Bearer ' + token;
     }
 
     //  获取网站商品列表
-    const getProductList = () => {
-        var pages1 = Array.from(Array(16), (v, k) => k + 1);
-        var pages2 = Array.from(Array(25), (v, k) => k + 1);
+    const getProductList = async () => {
+        const p1 = await getBasicActiveDataByPagePromiseByAxios(1).then(res => {
+            if (res && res.total && res.total.totalCount) {
+                return parseInt(res.total.totalCount / 180, 10) + 1
+            }
+        })
+        const p2 = await getBasicInactiveDataByPagePromiseByAxios(1).then(res => {
+            if (res && res.total && res.total.totalCount) {
+                return parseInt(res.total.totalCount / 180, 10) + 1
+            }
+        })
+
+
+        console.log('获取到的分页信息: ', {
+            active: p1,
+            inactive: p2
+        });
+
+        var pages1 = Array.from(Array(p1), (v, k) => k + 1);
+        var pages2 = Array.from(Array(p2), (v, k) => k + 1);
         const promiseArray1 = pages1.map(pn => getBasicActiveDataByPagePromiseByAxios(pn));
         const promiseArray2 = pages2.map(pn => getBasicInactiveDataByPagePromiseByAxios(pn));
         const time = moment(new Date().getTime()).format('YY-MM-DD_HH:mm:ss');
         Promise.all([...promiseArray1, ...promiseArray2]).then((allArray) => {
             const allItems = {};
             allArray.forEach(items => {
-                if (items) {
-                    items.forEach(item => {
+                if (items && items.records && items.records.length) {
+                    items.records.forEach(item => {
                         if (item.productId) {
                             allItems[item.productId] = {
                                 productId: item.productId,
@@ -97,6 +114,7 @@ const job2 = async () => {
             console.log(`${time}读取完整商品列表完成`);
         });
     }
+
     const getInventory = (allItems) => {
         let index = 0;
         let start_time = moment(new Date().getTime());

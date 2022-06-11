@@ -93,9 +93,10 @@ module.exports = {
     getBasicInactiveDataByPagePromiseByAxios: async function (pn) {
         return await http.get(`https://vendoradmin.fashiongo.net/api/items?pn=${pn}&ps=180&orderBy=lastModified&pageNo=1&pageSize=20&active=false&backUrl=;apn=4;ipn=2;pages=inactive`).then(res => {
             if (res && res.data && res.data.data && res.data.data.records) {
-                const data = res.data.data.records;
-                console.log(`查询[非active的商品]第${pn}页返回${data.length}条数据`);
-                return data;
+                const records = res.data.data.records;
+                const total = res.data.data.total;
+                // console.log(`查询[active的商品]第${pn}页返回${data.length}条数据`);
+                return { records, total };
             } else {
                 return [];
             }
@@ -105,9 +106,10 @@ module.exports = {
     getBasicActiveDataByPagePromiseByAxios: async function (pn) {
         return await http.get(`https://vendoradmin.fashiongo.net/api/items?pn=${pn}&ps=180&orderBy=activatedOn&pageNo=1&pageSize=20&active=true&backUrl=;apn=4;ipn=1;pages=active`).then(res => {
             if (res && res.data && res.data.data && res.data.data.records) {
-                const data = res.data.data.records;
-                console.log(`查询[active的商品]第${pn}页返回${data.length}条数据`);
-                return data;
+                const records = res.data.data.records;
+                const total = res.data.data.total;
+                // console.log(`查询[active的商品]第${pn}页返回${data.length}条数据`);
+                return { records, total };
             } else {
                 return [];
             }

@@ -29,9 +29,9 @@ rule.hour = hourRule; // 每隔6小时执行
 
 // 启动任务
 schedule.scheduleJob(rule, () => {
-    const time = moment(new Date().getTime()).format('YY-MM-DD HH:mm:ss');
-    console.log(chalk.greenBright('开始定时任务:', time));
-    job2();
+    // const time = moment(new Date().getTime()).format('YY-MM-DD HH:mm:ss');
+    // console.log(chalk.greenBright('开始定时任务:', time));
+    // job2();
 });
 
 

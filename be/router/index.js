@@ -1,7 +1,7 @@
 // 1.导入express
 const express = require('express')
 const multer = require('multer')
-const xlsx = require('node-xlsx');
+const xlsx = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略

@@ -1,11 +1,23 @@
-const { getInventoryPromise, loginPromise, updatePromise, getBasicActiveDataByPagePromise, getBasicInactiveDataByPagePromise, getItem } = require('../2.fashiongo/getItem');
+const {
+    getInventoryPromise,
+    loginPromise,
+    updatePromise,
+    getBasicActiveDataByPagePromise,
+    getBasicInactiveDataByPagePromise,
+    getItem
+} = require('../2.fashiongo/getItem');
 const xlsx = require('xlsx');
 const nodeXlsx = require('node-xlsx')
 const path = require('path');
 const fs = require('fs'); //文件模块
-const { Worker, workerData } = require("worker_threads");
+const {
+    Worker,
+    workerData
+} = require("worker_threads");
 const moment = require('moment');
-const { dataObject } = require('../data/2.fashiongo/dataObject.json');
+const {
+    dataObject
+} = require('../data/2.fashiongo/dataObject.json');
 let idsIndex = 0;
 const errorList = [];
 const json_to_sheet = (arr) => {
@@ -23,9 +35,25 @@ const json_to_sheet = (arr) => {
 }
 
 const handleRequest = (product, inventoryResponseData) => {
-    const { item, inventory: inventoryArrayDataInWeb } = inventoryResponseData;
-    let { productId, productName, categoryId, parentCategoryId, parentParentCategoryId, ingredients, howtouse, weight, mapDropshipProductId, crossSellCount } = item;
-    const { inventoryObject } = product;
+    const {
+        item,
+        inventory: inventoryArrayDataInWeb
+    } = inventoryResponseData;
+    let {
+        productId,
+        productName,
+        categoryId,
+        parentCategoryId,
+        parentParentCategoryId,
+        ingredients,
+        howtouse,
+        weight,
+        mapDropshipProductId,
+        crossSellCount
+    } = item;
+    const {
+        inventoryObject
+    } = product;
 
     var colorsInWeb = [];
     inventoryArrayDataInWeb.map(item => {
@@ -98,12 +126,10 @@ const handleRequest = (product, inventoryResponseData) => {
             "colorCount": inventoryArrayDataInWeb.length
         },
         "inventoryV2": {
-            "saved": [
-                {
-                    "productId": productId,
-                    "inventoryPrepack": inventoryArrayDataInWebCopy
-                }
-            ],
+            "saved": [{
+                "productId": productId,
+                "inventoryPrepack": inventoryArrayDataInWebCopy
+            }],
             "deleted": []
         },
         "image": {
@@ -142,9 +168,17 @@ const handleData = async (req, res) => {
         const p = getBasicActiveDataByPagePromise(pn).then(response => {
             if (response && response.data && response.data.records) {
                 return response.data.records.map(item => {
-                    const { active, productId, productName, sellingPrice } = item;
+                    const {
+                        active,
+                        productId,
+                        productName,
+                        sellingPrice
+                    } = item;
                     return {
-                        active, productId, productName, sellingPrice
+                        active,
+                        productId,
+                        productName,
+                        sellingPrice
                     }
                 });
             }
@@ -152,25 +186,31 @@ const handleData = async (req, res) => {
         }).catch(err => {
             console.log('分页获取激活的商品列表发生错误: ', err);
             console.log('');
-        }).finally(() => {
-        });
+        }).finally(() => {});
         return p;
     });
     const promiseArray2 = await pages2.map(pn => {
         const p = getBasicInactiveDataByPagePromise(pn).then(response => {
             if (response && response.data && response.data.records) {
                 return response.data.records.map(item => {
-                    const { active, productId, productName, sellingPrice } = item;
+                    const {
+                        active,
+                        productId,
+                        productName,
+                        sellingPrice
+                    } = item;
                     return {
-                        active, productId, productName, sellingPrice
+                        active,
+                        productId,
+                        productName,
+                        sellingPrice
                     }
                 });
             }
         }).catch(err => {
             console.log('分页获取未激活的商品列表发生错误: ', err);
             console.log('');
-        }).finally(() => {
-        });
+        }).finally(() => {});
         return p;
     });
     Promise.all([...promiseArray1, ...promiseArray2]).then((values) => {
@@ -188,7 +228,9 @@ const handleData = async (req, res) => {
             })
         })
         //把data对象转换为json格式字符串
-        var content = JSON.stringify({ dataObject });
+        var content = JSON.stringify({
+            dataObject
+        });
         //指定创建目录及文件名称，__dirname为执行当前js文件的目录
         var file = path.join(__dirname, '../data/2.fashiongo/dataObject.json');
         //写入文件
@@ -225,14 +267,23 @@ const web2_controller = {
         delete require.cache[allItemsFile];
 
 
-        const { allItems } = require(allItemsFile);
-        const { allGoodsInventoryArray } = require(allGoodsInventoryArrayFile);
+        const {
+            allItems
+        } = require(allItemsFile);
+        const {
+            allGoodsInventoryArray
+        } = require(allGoodsInventoryArrayFile);
 
         const data = [
             ['Style ID', 'Style No', 'Selling Price', 'Active']
         ];
         Object.keys(allItems).forEach((productID, index) => {
-            const { productId, productName, sellingPrice, active } = allItems[productID];
+            const {
+                productId,
+                productName,
+                sellingPrice,
+                active
+            } = allItems[productID];
             data.push([productId, productName, sellingPrice, active]);
         });
 
@@ -241,15 +292,22 @@ const web2_controller = {
             ['Style ID', 'Style No', 'Selling Price', 'Active', 'Color Name', 'Status', 'availableQty']
         ];
         allGoodsInventoryArray.forEach((item) => {
-            const { productId, productName, sellingPrice, active, colorName, status, availableQty } = item;
+            const {
+                productId,
+                productName,
+                sellingPrice,
+                active,
+                colorName,
+                status,
+                availableQty
+            } = item;
             data2.push([productId, productName, sellingPrice, active, colorName, status, availableQty]);
         });
 
         console.log('allGoodsInventoryArray.length: ', allGoodsInventoryArray.length);
         console.log('data2.length: ', data2.length);
 
-        var buffer = nodeXlsx.build([
-            {
+        var buffer = nodeXlsx.build([{
                 name: `商品列表--${data.length - 1}条数据`,
                 data: data
             },
@@ -277,7 +335,8 @@ const web2_controller = {
         getInventoryPromise(id).then(response => {
             const data = response && response.data || {}
             res.status(200).send({
-                data, success: true
+                data,
+                success: true
             })
         })
     },
@@ -289,8 +348,12 @@ const web2_controller = {
         delete require.cache[allGoodsInventoryArrayFile];
         delete require.cache[allItemsFile];
 
-        const { allItems } = require(allItemsFile);
-        const { allGoodsInventoryArray } = require(allGoodsInventoryArrayFile);
+        const {
+            allItems
+        } = require(allItemsFile);
+        const {
+            allGoodsInventoryArray
+        } = require(allGoodsInventoryArrayFile);
 
         res.status(200).send({
             data: req.query.flag === 'false' ? allItems : allGoodsInventoryArray,
@@ -319,12 +382,10 @@ const web2_controller = {
                     console.log(`处理完毕 开始返回数据: ${responseData.length}`);
                     console.timeEnd('testForEach');
 
-                    var buffer = nodeXlsx.build([
-                        {
-                            name: `全部待更新的数据--${data.length}条数据`,
-                            data: _.flattenDeep(responseData)
-                        }
-                    ]);
+                    var buffer = nodeXlsx.build([{
+                        name: `全部待更新的数据--${data.length}条数据`,
+                        data: _.flattenDeep(responseData)
+                    }]);
 
                     //写入文件
                     fs.appendFile(('商品库存查询结果.xlsx'), buffer, function (err) {
@@ -347,11 +408,6 @@ const web2_controller = {
             });
             worker.postMessage(item);
         })
-
-
-
-
-
     },
 
     getBasicActiveDataByPage: (req, res) => {
@@ -422,7 +478,7 @@ const web2_controller = {
                 console.log('更新价格完成');
                 var content = JSON.stringify(errorList);
                 console.log(errorList);
-                var file = path.join(__dirname, './data/失败记录.json');
+                var file = path.join(__dirname, './data/第2个网站更新失败记录.json');
                 //写入文件
                 fs.writeFile(file, content, function (err) {
                     if (err) {

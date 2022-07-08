@@ -1,199 +1,292 @@
 [
     {
-        "id": "7724588",
-        "name": "FL-DORIS-22",
+        "id": "8603196",
+        "name": "FL-JIMMI-05",
         "inventoryObject": {
-            "BLACK": 999,
-            "BLUE PATENT": 999,
-            "GOLD": 1998,
-            "RED": 0,
-            "SILVER": 1998,
-            "SNAKE": 1998,
-            "WHITE": 999,
-            "YELLOW": 999
+            "BLACK": 1998,
+            "BLUE": 1998,
+            "TAN": 1998
         }
     },
     {
-        "id": "8098364",
-        "name": "FL-AUBREE-16",
+        "id": "9327133",
+        "name": "FL-REFORM-2",
         "inventoryObject": {
-            "BEIGE": 0,
             "BLACK": 999,
-            "CHARCOAL": 1998,
-            "GOLD": 1998,
+            "RAINBOW": 999,
             "RED": 1998,
-            "SILVER": 1998
+            "TAN": 1998,
+            "TAUPE": 1998
         }
     },
     {
-        "id": "8716428",
-        "name": "FL-LORIS-28",
+        "id": "9809713",
+        "name": "FL-JALEN-88",
         "inventoryObject": {
-            "BLACK PATENT": 999,
-            "WHITE PATENT": 0
-        }
-    },
-    {
-        "id": "8798007",
-        "name": "FL-DANA-9",
-        "inventoryObject": {
-            "CHAMPAGNE": 0,
-            "SILVER": 0
-        }
-    },
-    {
-        "id": "9648537",
-        "name": "FL-CBC-78",
-        "inventoryObject": {
-            "BLACK": 999,
-            "NUDE": 1998,
-            "TAUPE": 1998,
-            "WHITE": 999
-        }
-    },
-    {
-        "id": "10289119",
-        "name": "FL-GLORIA-64KA",
-        "inventoryObject": {
-            "BLACK": 999,
-            "PINK": 999,
-            "WHITE": 0
-        }
-    },
-    {
-        "id": "10289130",
-        "name": "FL-GLORIA-64K",
-        "inventoryObject": {
-            "BEIGE": 999,
-            "BLACK": 999,
-            "WHITE": 999
-        }
-    },
-    {
-        "id": "11080504",
-        "name": "FL-SENSATIONAL-1K",
-        "inventoryObject": {
-            "BLACK": 999,
-            "DUSTY PINK": 999,
-            "LEOPARD": 999,
-            "RED": 999,
-            "TAN": 999,
+            "BLACK": 0,
+            "TAN": 1998,
             "TAUPE": 999
         }
     },
     {
-        "id": "11221107",
-        "name": "FL-REFORM-53K",
+        "id": "9811922",
+        "name": "FL-MANGO-21",
         "inventoryObject": {
             "BLACK": 999,
-            "PINK": 999,
-            "RED": 0,
-            "ROSE GOLD": 999,
-            "TAN": 999,
-            "WHITE": 999
+            "BROWN": 1998,
+            "TAN": 1998
         }
     },
     {
-        "id": "11424149",
-        "name": "FL-BERK-06",
-        "inventoryObject": {
-            "BLACK": 1998,
-            "CHAMPAGNE": 1998,
-            "RAINBOW": 1998,
-            "ROSE GOLD": 1998,
-            "SILVER": 1998
-        }
-    },
-    {
-        "id": "11812330",
-        "name": "FL-SYSTEM-82",
-        "inventoryObject": {
-            "ROSE GOLD": 0
-        }
-    },
-    {
-        "id": "11857065",
-        "name": "FL-SHOWY-86",
-        "inventoryObject": {
-            "SILVER": 1998
-        }
-    },
-    {
-        "id": "11898335",
-        "name": "FL-LEAD-16",
-        "inventoryObject": {
-            "BLACK": 0,
-            "GOLD": 0,
-            "SILVER": 0
-        }
-    },
-    {
-        "id": "12140614",
-        "name": "FL-NATALY-01",
+        "id": "10338579",
+        "name": "FL-NATALY-06",
         "inventoryObject": {
             "ARGENT": 1998,
-            "BEIGE": 1998,
             "BLACK": 0,
-            "CHAMPAGNE": 1998,
-            "GOLD": 1998,
+            "CHAMPAGNE": 0,
+            "LEOPARD": 1998,
+            "MUSTARD": 999,
+            "PINK TIE DYE": 999,
+            "RED": 0,
             "REDNESS": 1998,
-            "SILVER": 1998,
+            "ROYAL BLUE": 999,
+            "TAUPE": 1998
+        }
+    },
+    {
+        "id": "10487350",
+        "name": "FL-DRIVE-32",
+        "inventoryObject": {
+            "BLACK": 0,
+            "BURGUNDY": 1998,
+            "TAN": 1998,
+            "TAUPE": 1998
+        }
+    },
+    {
+        "id": "11051817",
+        "name": "FL-SCOBLE-48",
+        "inventoryObject": {
+            "CHAMPAGNE": 999,
+            "SILVER": 999
+        }
+    },
+    {
+        "id": "11804696",
+        "name": "FL-GROWTH-03",
+        "inventoryObject": {
+            "ARGENT": 1998,
+            "BLACK NUBUCK": 1998,
+            "CHAMPAGNE": 0,
+            "CHARCOAL PATENT": 1998,
+            "GOLD": 1998,
+            "MUSTARD": 1998,
+            "RED PATENT": 1998,
+            "RED SUEDE": 1998,
             "TAUPE": 1998,
             "WHITE": 1998
         }
     },
     {
-        "id": "12308701",
-        "name": "FL-MIKA-77K",
+        "id": "11804820",
+        "name": "FL-NATALY-19",
         "inventoryObject": {
             "BLACK": 0
         }
     },
     {
-        "id": "12373916",
-        "name": "FL-ACTIVE-10",
+        "id": "12406012",
+        "name": "FL-FISHER-3K",
         "inventoryObject": {
-            "RED": 1998,
-            "TAUPE": 0,
-            "WHITE": 999
+            "BLACK": 999,
+            "CHAMPAGNE": 999
         }
     },
     {
-        "id": "12403660",
-        "name": "FL-MATURE-76",
+        "id": "12406118",
+        "name": "FL-FLEXIBLE-33K",
         "inventoryObject": {
-            "BLACK": 1998,
-            "TAN": 1998,
-            "TAUPE": 1998,
-            "WHITE": 1998
+            "RED": 999,
+            "TAN": 0
         }
     },
     {
         "id": "12431994",
         "name": "FL-FLOW-19",
         "inventoryObject": {
-            "BEIGE": 999,
+            "BEIGE": 0,
+            "BLACK": 999,
             "BLACK MULTI": 1998,
             "BLACK CLEAR": 1998,
             "HOT PINK TIE DYE": 1998,
             "LIGHT BLUE": 1998,
             "LAVENDER": 1998,
-            "MAUVE": 0,
+            "MAUVE": 999,
             "MULTI": 1998,
+            "OLIVE": 999,
             "ORANGE TIE DYE": 999,
+            "PINK": 1998,
             "PURPLE TIE DYE": 1998,
             "RED TIE DYE": 999,
-            "ROSE TIE DYE": 1998
+            "ROSE TIE DYE": 1998,
+            "SILVER GREY": 1998
         }
     },
     {
-        "id": "12445519",
-        "name": "FL-BERK-06K",
+        "id": "12597531",
+        "name": "TG-ALDER-1",
+        "inventoryObject": {
+            "NUDE": 0
+        }
+    },
+    {
+        "id": "12600702",
+        "name": "TG-DELIA-1",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "CHAMPAGNE": 1998,
+            "RED": 999,
+            "TAN": 1998
+        }
+    },
+    {
+        "id": "12600705",
+        "name": "TG-DIAMOND-1",
+        "inventoryObject": {
+            "ROSE GOLD": 999,
+            "SILVER": 0
+        }
+    },
+    {
+        "id": "12602341",
+        "name": "TG-MARS-1",
+        "inventoryObject": {
+            "BLACK PU": 1998,
+            "CHESTNUT": 999
+        }
+    },
+    {
+        "id": "12602405",
+        "name": "TG-MONROE-1",
+        "inventoryObject": {
+            "BLACK PATENT": 1998,
+            "BLACK NUBUCK": 1998,
+            "BROWN PU": 999,
+            "CAMEL PATENT": 1998,
+            "FUCHSIA": 1998,
+            "GREEN": 1998,
+            "IVORY PU": 999,
+            "NUDE PATENT": 1998,
+            "NUDE PU": 1998,
+            "RED PATENT": 1998,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "12602438",
+        "name": "TG-NORAH-1",
         "inventoryObject": {
             "BLACK": 999,
-            "CHAMPAGNE": 999,
-            "RAINBOW": 999,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "12603430",
+        "name": "TG-PHASE-7K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "NUDE": 999,
             "ROSE GOLD": 999,
+            "SILVER": 999,
+            "TAN": 999,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "12603464",
+        "name": "TG-ROSA-66",
+        "inventoryObject": {
+            "BLACK": 999,
+            "CHAMPAGNE": 1998,
+            "NUDE": 1998,
+            "SILVER": 1998,
+            "WHITE": 999
+        }
+    },
+    {
+        "id": "12603712",
+        "name": "TG-SONG-1",
+        "inventoryObject": {
+            "BLACK": 1998
+        }
+    },
+    {
+        "id": "12735607",
+        "name": "TG-ZANDRA-26K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "CHESTNUT": 999,
+            "TAUPE": 999
+        }
+    },
+    {
+        "id": "12877534",
+        "name": "FL-PAOLA-71",
+        "inventoryObject": {
+            "BLACK": 0,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "12929615",
+        "name": "FL-MEGA-37",
+        "inventoryObject": {
+            "GREY": 0
+        }
+    },
+    {
+        "id": "12929774",
+        "name": "FL-FORWARD-79",
+        "inventoryObject": {
+            "BLACK": 999,
+            "PINK": 999,
+            "TAN": 999,
+            "WHITE": 999
+        }
+    },
+    {
+        "id": "12969259",
+        "name": "TG-LUCY-1",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "CHESTNUT": 1998,
+            "RED": 999,
+            "TAUPE": 1998
+        }
+    },
+    {
+        "id": "13007421",
+        "name": "TG-LUCY-86",
+        "inventoryObject": {
+            "BLACK PU": 1998,
+            "BLACK": 1998
+        }
+    },
+    {
+        "id": "13208325",
+        "name": "TG-SOSANNA-1",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "BROWN": 0,
+            "TAN": 1998
+        }
+    },
+    {
+        "id": "13379076",
+        "name": "TG-DARCIE-1",
+        "inventoryObject": {
+            "BLACK": 0,
+            "CHAMPAGNE": 999,
             "SILVER": 999
         }
     },
@@ -202,191 +295,196 @@
         "name": "FL-FLOW-19K",
         "inventoryObject": {
             "BLACK": 999,
+            "BLACK CLEAR": 999,
+            "BURGUNDY": 999,
             "FUCHSIA": 999,
             "LIGHT BLUE": 999,
             "LAVENDER": 999,
             "MAUVE": 999,
+            "NAVY": 999,
             "PINK": 999,
+            "PURPLE": 999,
             "RED TIE DYE": 999,
+            "RED": 999,
+            "ROSE TIE DYE": 999,
+            "SILVER GREY": 999
+        }
+    },
+    {
+        "id": "13459527",
+        "name": "TG-CLAIRE-1",
+        "inventoryObject": {
+            "BLACK": 2997,
+            "CHAMPAGNE": 1998,
+            "SILVER": 1998,
+            "TAN": 2997
+        }
+    },
+    {
+        "id": "13537481",
+        "name": "TG-SCOTT-1",
+        "inventoryObject": {
+            "BLACK": 0,
+            "TAN": 0
+        }
+    },
+    {
+        "id": "13602876",
+        "name": "TG-CANDIDE-1",
+        "inventoryObject": {
+            "BLACK": 999
+        }
+    },
+    {
+        "id": "13602929",
+        "name": "TG-REBA-1",
+        "inventoryObject": {
+            "BLACK": 999,
+            "CLEAR": 0,
+            "LIGHT BLUE": 1998,
+            "MINT": 999,
+            "NUDE": 999,
             "RED": 999
         }
     },
     {
-        "id": "13645686",
-        "name": "FL-COMEX-11",
+        "id": "13602952",
+        "name": "TG-IKE-1",
         "inventoryObject": {
             "BLACK": 0
         }
     },
     {
-        "id": "13652063",
-        "name": "FL-FLOW-19KA",
+        "id": "13631610",
+        "name": "TG-SURYA-1",
         "inventoryObject": {
             "BLACK": 0,
-            "HOT PINK TIE DYE": 0,
-            "LIGHT BLUE": 999,
-            "MULTI": 999,
-            "ORANGE TIE DYE": 999,
-            "PURPLE TIE DYE": 999,
-            "RED": 0
+            "CLEAR": 0
         }
     },
     {
-        "id": "13674451",
-        "name": "FL-ADANA-05",
+        "id": "13631625",
+        "name": "TG-ARDEN-1",
         "inventoryObject": {
-            "BLACK": 0,
-            "CLEAR": 0,
-            "FUCHSIA": 0
+            "NUDE": 0
         }
     },
     {
-        "id": "13776985",
-        "name": "FL-HANDINESS-42",
+        "id": "13631655",
+        "name": "TG-BRAZIL-72",
         "inventoryObject": {
             "BLACK": 999,
-            "MUSTARD": 1998,
+            "IVORY": 999,
+            "NUDE": 999,
             "TAN": 999
         }
     },
     {
-        "id": "13815928",
-        "name": "FL-TIE-18",
-        "inventoryObject": {
-            "BEIGE": 0,
-            "BLACK": 0,
-            "FLOWER": 0,
-            "MAUVE": 0
-        }
-    },
-    {
-        "id": "13849147",
-        "name": "FL-VIEW-27",
-        "inventoryObject": {
-            "BLACK": 0,
-            "LEOPARD": 0,
-            "RAINBOW": 0,
-            "RED": 0,
-            "YELLOW": 0
-        }
-    },
-    {
-        "id": "13849329",
-        "name": "FL-EXAM-23",
-        "inventoryObject": {
-            "BLACK": 0,
-            "TAUPE": 0,
-            "WHITE": 0
-        }
-    },
-    {
-        "id": "13851311",
-        "name": "FL-GREAT-12",
-        "inventoryObject": {
-            "BLACK": 999,
-            "TAN": 999
-        }
-    },
-    {
-        "id": "13868867",
-        "name": "FL-BEYOND-9",
-        "inventoryObject": {
-            "GOLD": 0,
-            "MULTI BLACK": 0,
-            "MULTI WHITE": 0
-        }
-    },
-    {
-        "id": "13931446",
-        "name": "FL-FANNIE-98",
-        "inventoryObject": {
-            "BLACK": 999,
-            "ROSE GOLD": 0
-        }
-    },
-    {
-        "id": "14121201",
-        "name": "FL-ANNESA-2",
-        "inventoryObject": {
-            "BLACK": 0,
-            "TAN": 0,
-            "WHITE": 0
-        }
-    },
-    {
-        "id": "14696692",
-        "name": "FL-REBOUND-46",
-        "inventoryObject": {
-            "BLACK": 0,
-            "PINK": 0,
-            "TAN": 0
-        }
-    },
-    {
-        "id": "14832258",
-        "name": "FL-SONIA-64",
+        "id": "13631706",
+        "name": "TG-BRAZIL-1",
         "inventoryObject": {
             "BLACK": 1998,
-            "CHAMPAGNE": 1998,
-            "RED": 1998,
-            "SILVER": 1998,
-            "TAN": 1998,
-            "TAUPE": 1998
+            "IVORY": 1998,
+            "WINE": 0
         }
     },
     {
-        "id": "14980170",
-        "name": "FL-STEVEN-7",
+        "id": "13667258",
+        "name": "TG-GATETH-56",
         "inventoryObject": {
-            "BLACK": 0,
-            "COFFEE": 1998,
-            "TAN": 1998
+            "PEWTER": 1998,
+            "ROSE GOLD": 0,
+            "SILVER": 2997
         }
     },
     {
-        "id": "15023621",
-        "name": "FL-SURE-23",
-        "inventoryObject": {
-            "BLACK": 0,
-            "BLUSH": 0,
-            "TAN": 0
-        }
-    },
-    {
-        "id": "15071113",
-        "name": "FL-FOLLOW-01K",
+        "id": "13667318",
+        "name": "TG-ROWEN-75K",
         "inventoryObject": {
             "BLACK": 999,
-            "MAUVE": 999,
-            "RED": 999
+            "BLUSH": 999,
+            "LIGHT BLUE": 0,
+            "MULTI": 999,
+            "TAN": 999
         }
     },
     {
-        "id": "15071125",
-        "name": "FL-FOLLOW-08K",
+        "id": "13693826",
+        "name": "TG-LIZZO-1",
         "inventoryObject": {
-            "BLACK": 999,
-            "MAUVE": 999,
-            "RED": 999
+            "CHEETAH": 1998,
+            "TIE DYE": 0,
+            "WHITE WHITE": 999,
+            "WHITE": 999
         }
     },
     {
-        "id": "15091061",
-        "name": "FL-YARA-42",
+        "id": "13774817",
+        "name": "TG-MALIK-20",
+        "inventoryObject": {
+            "ZEBRA": 0
+        }
+    },
+    {
+        "id": "14032535",
+        "name": "TG-DOROTHY-1",
         "inventoryObject": {
             "BLACK": 0,
-            "BLUSH": 0,
-            "RED": 0,
-            "TAN": 0,
+            "NUDE": 0,
             "WHITE": 0
         }
     },
     {
-        "id": "15120729",
-        "name": "FL-FOLLOW-02K",
+        "id": "14774854",
+        "name": "TG-DARCIE-1K",
         "inventoryObject": {
             "BLACK": 999,
-            "PINK": 999,
+            "CHAMPAGNE": 0
+        }
+    },
+    {
+        "id": "14784962",
+        "name": "FL-BRAVE-22",
+        "inventoryObject": {
+            "BLACK": 999,
+            "CORAL PINK": 999,
+            "RED": 1998,
+            "WHITE GREEN": 1998
+        }
+    },
+    {
+        "id": "15071097",
+        "name": "FL-FOLLOW-02",
+        "inventoryObject": {
+            "PINK": 1998,
+            "RED": 1998,
+            "WHITE": 999
+        }
+    },
+    {
+        "id": "15071101",
+        "name": "FL-FOLLOW-08",
+        "inventoryObject": {
+            "BLACK": 999,
+            "MAUVE": 999,
+            "RED": 1998
+        }
+    },
+    {
+        "id": "15071105",
+        "name": "FL-FOLLOW-09",
+        "inventoryObject": {
+            "BLACK": 999,
+            "MAUVE": 999,
+            "RED": 1998
+        }
+    },
+    {
+        "id": "15071138",
+        "name": "FL-FOLLOW-09K",
+        "inventoryObject": {
+            "BLACK": 0,
+            "MAUVE": 999,
             "RED": 999
         }
     },
@@ -394,88 +492,49 @@
         "id": "15200142",
         "name": "FL-FLOW-11",
         "inventoryObject": {
+            "BEIGE": 1998
+        }
+    },
+    {
+        "id": "15242124",
+        "name": "FL-HOOD-03",
+        "inventoryObject": {
+            "TAUPE": 999
+        }
+    },
+    {
+        "id": "15313854",
+        "name": "FL-REJOICE-02",
+        "inventoryObject": {
             "BEIGE": 999,
-            "RED": 0
-        }
-    },
-    {
-        "id": "15201204",
-        "name": "FL-WOVE-06",
-        "inventoryObject": {
-            "BLACK": 0
-        }
-    },
-    {
-        "id": "15258485",
-        "name": "FL-DING-30",
-        "inventoryObject": {
             "BLACK": 1998,
-            "CLEAR": 1998
+            "TAN": 1998
         }
     },
     {
-        "id": "15264775",
-        "name": "FL-NATALY-35",
-        "inventoryObject": {
-            "BLACK": 1998,
-            "CHAMPAGNE": 1998,
-            "SILVER": 1998
-        }
-    },
-    {
-        "id": "15313838",
-        "name": "FL-FOLLOW-07K",
-        "inventoryObject": {
-            "BLACK PINK": 999,
-            "BLACK RED": 999,
-            "WHITE LIGHT BLUE": 999,
-            "WHITE PINK": 999,
-            "WHITE PURPLE": 999
-        }
-    },
-    {
-        "id": "15531656",
-        "name": "FL-LOYALTY-78",
-        "inventoryObject": {
-            "BLACK": 1998,
-            "TAN": 999,
-            "TAUPE": 999
-        }
-    },
-    {
-        "id": "15539911",
-        "name": "FL-LOYALTY-78K",
-        "inventoryObject": {
-            "BLACK": 999,
-            "DUSTY PINK": 999,
-            "TAN": 999,
-            "TAUPE": 999
-        }
-    },
-    {
-        "id": "15909388",
-        "name": "FL-PIONEER-03",
-        "inventoryObject": {
-            "BLACK": 1998,
-            "BROWN": 1998,
-            "COFFEE": 999
-        }
-    },
-    {
-        "id": "15909402",
-        "name": "FL-PIONEER-04",
-        "inventoryObject": {
-            "BLACK": 1998,
-            "BROWN": 1998,
-            "COFFEE": 1998
-        }
-    },
-    {
-        "id": "15914713",
-        "name": "FL-MEEK-01",
+        "id": "15605731",
+        "name": "TG-PEARL-1",
         "inventoryObject": {
             "BLACK": 0,
-            "WHITE": 0
+            "NUDE": 0,
+            "TAN": 0
+        }
+    },
+    {
+        "id": "15708135",
+        "name": "FL-NATALIE-33",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "CHAMPAGNE": 999,
+            "SILVER": 0
+        }
+    },
+    {
+        "id": "15822404",
+        "name": "FL-BRETTY-18",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "TAN": 1998
         }
     },
     {
@@ -484,35 +543,228 @@
         "inventoryObject": {
             "BEIGE": 1998,
             "BLACK": 1998,
-            "LIGHT BLUE": 999,
-            "LAVENDER": 0,
+            "LIGHT BLUE": 1998,
+            "LAVENDER": 1998,
             "MAUVE": 1998,
             "WHITE": 1998
         }
     },
     {
-        "id": "16184739",
-        "name": "FL-HENRY-26",
+        "id": "16017938",
+        "name": "FL-HIGHLIGHT-90",
         "inventoryObject": {
             "BLACK": 1998,
-            "BROWN": 1998,
-            "COFFEE": 1998
+            "CHAMPAGNE": 1998,
+            "SILVER": 1998
         }
     },
     {
-        "id": "16255779",
-        "name": "FL-RELATE-12",
+        "id": "16028333",
+        "name": "TG-PEARL-6",
+        "inventoryObject": {
+            "BLACK": 0,
+            "CAMEL": 0,
+            "RED": 0
+        }
+    },
+    {
+        "id": "16070289",
+        "name": "TG-HILTON-1K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "PINK": 999,
+            "RED": 999,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "16090255",
+        "name": "TG-AMOR-1",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "LAVENDER": 0,
+            "LIGHT BLUE": 999,
+            "NUDE": 1998
+        }
+    },
+    {
+        "id": "16090260",
+        "name": "TG-DELIA-6K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "CHAMPAGNE": 999,
+            "RED": 0,
+            "SILVER": 999,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "16108863",
+        "name": "TG-ALEXIS-1",
+        "inventoryObject": {
+            "BLACK": 0,
+            "ROSE GOLD": 0,
+            "SILVER": 0
+        }
+    },
+    {
+        "id": "16220756",
+        "name": "FL-AMBER-14",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "NUDE": 1998,
+            "REDNESS": 1998,
+            "TAUPE": 1998,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "16220849",
+        "name": "TG-NICK-5",
+        "inventoryObject": {
+            "BLACK": 0,
+            "BLUSH": 0
+        }
+    },
+    {
+        "id": "16370008",
+        "name": "FL-YULA-18",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "NUDE": 1998,
+            "RED": 999
+        }
+    },
+    {
+        "id": "16372206",
+        "name": "FL-TASTE-92",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "NUDE": 1998,
+            "RED": 999
+        }
+    },
+    {
+        "id": "16448653",
+        "name": "TG-MESA-27",
+        "inventoryObject": {
+            "BLACK": 0,
+            "ROSE GOLD": 0
+        }
+    },
+    {
+        "id": "16458986",
+        "name": "FL-YARA-01K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "BLUSH": 999,
+            "TAN": 0,
+            "WHITE": 999
+        }
+    },
+    {
+        "id": "16469922",
+        "name": "TG-PIXEL-91",
         "inventoryObject": {
             "BEIGE": 999,
+            "BLACK": 1998,
+            "ORANGE": 0,
+            "PINK": 1998
+        }
+    },
+    {
+        "id": "16469962",
+        "name": "TG-DARCIE-99",
+        "inventoryObject": {
             "BLACK": 999,
-            "COFFEE": 1998,
-            "RED": 1998,
+            "NUDE": 999,
+            "TAUPE": 0
+        }
+    },
+    {
+        "id": "16516614",
+        "name": "TG-DOVE-6",
+        "inventoryObject": {
+            "BLACK": 0,
+            "CLEAR": 0,
+            "NUDE": 0,
+            "RED": 0
+        }
+    },
+    {
+        "id": "16534859",
+        "name": "TG-VISION-50",
+        "inventoryObject": {
+            "BLACK": 0,
+            "BLUSH": 999,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "16535939",
+        "name": "FL-REBOUND-38KA",
+        "inventoryObject": {
+            "BLACK": 999,
+            "PINK": 999,
+            "TAN": 999,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "16824823",
+        "name": "FL-FLOW-89",
+        "inventoryObject": {
+            "BLUE": 999,
+            "BROWN": 1998,
+            "RED": 1998
+        }
+    },
+    {
+        "id": "16824934",
+        "name": "FL-STREAM-89",
+        "inventoryObject": {
+            "GREY": 1998,
+            "NAVY": 0
+        }
+    },
+    {
+        "id": "16906710",
+        "name": "TG-HILTON-28K",
+        "inventoryObject": {
+            "PINK": 999,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "16906828",
+        "name": "TG-GALLERY-76K",
+        "inventoryObject": {
+            "BLACK": 999,
+            "NUDE": 999,
+            "RED": 999,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "16995357",
+        "name": "FL-STAGE-02",
+        "inventoryObject": {
+            "BLACK": 999,
+            "BROWN": 1998,
             "TAN": 1998
         }
     },
     {
-        "id": "16255859",
-        "name": "FL-UPWARD-01",
+        "id": "16997694",
+        "name": "FL-ICEBERG-12",
+        "inventoryObject": {
+            "BLACK": 0,
+            "RED": 1998
+        }
+    },
+    {
+        "id": "17055516",
+        "name": "TG-SONNET-5",
         "inventoryObject": {
             "BLACK": 1998,
             "NUDE": 1998,
@@ -520,33 +772,90 @@
         }
     },
     {
-        "id": "16267311",
-        "name": "FL-UPWARD-02",
+        "id": "17072489",
+        "name": "TG-RIM-1",
+        "inventoryObject": {
+            "BLACK PATENT": 1998,
+            "BLACK CROCO": 999,
+            "BLACK PU": 999,
+            "CAMEL PATENT": 1998,
+            "NUDE PU": 999,
+            "RED PATENT": 999,
+            "TAN PU": 999,
+            "WHITE PU": 999,
+            "WINE PATENT": 1998
+        }
+    },
+    {
+        "id": "17089519",
+        "name": "TG-SKITTLE-26",
         "inventoryObject": {
             "BLACK": 1998,
+            "TAN": 999
+        }
+    },
+    {
+        "id": "17112278",
+        "name": "TG-HERA-8",
+        "inventoryObject": {
+            "BLACK NUBUCK": 999,
             "NUDE": 1998,
-            "RED": 999,
+            "TAN PU": 999,
+            "TAN NUBUCK": 1998,
+            "WHITE": 0
+        }
+    },
+    {
+        "id": "17137691",
+        "name": "TG-FINN-1",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "CAMEL": 1998,
+            "IVORY": 999
+        }
+    },
+    {
+        "id": "17227560",
+        "name": "FL-SUTTON-01",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "BLUSH": 1998,
+            "BROWN": 1998,
+            "TAN": 1998,
             "WHITE": 1998
         }
     },
     {
-        "id": "16480628",
-        "name": "FL-LUXURY-96K",
+        "id": "17227567",
+        "name": "FL-SUTTON-02",
         "inventoryObject": {
-            "BLACK": 999,
-            "CHAMPAGNE": 999,
-            "DUSTY PINK": 0,
-            "RED": 999,
-            "SILVER": 999
+            "BLACK": 1998,
+            "BLUSH": 1998,
+            "BROWN": 1998,
+            "TAN": 1998,
+            "WHITE": 1998
         }
     },
     {
-        "id": "17143108",
-        "name": "FL-YULA-17",
+        "id": "17227569",
+        "name": "FL-SUTTON-03",
         "inventoryObject": {
             "BLACK": 1998,
-            "NUDE": 999,
-            "RED": 0
+            "BLUSH": 1998,
+            "BROWN": 1998,
+            "TAN": 1998,
+            "WHITE": 1998
+        }
+    },
+    {
+        "id": "17227576",
+        "name": "FL-SUTTON-04",
+        "inventoryObject": {
+            "BLACK": 1998,
+            "BLUSH": 1998,
+            "BROWN": 1998,
+            "TAN": 1998,
+            "WHITE": 1998
         }
     }
 ]

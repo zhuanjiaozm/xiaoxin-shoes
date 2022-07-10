@@ -8,7 +8,11 @@ const update2 = (data) => http.post('update2', data);
 
 const login2 = (params) => http.post('login2', params);
 
-const getProductList = (flag) => http.get('getProductList', { flag });
+const updatePrice = (params) => http.post('updatePrice', params);
+
+const getProductList = (flag) => http.get('getProductList', {
+  flag
+});
 
 const getInventory = (id) => http.get('getInventory/' + id);
 
@@ -25,7 +29,7 @@ const exportExcel = () => http.get('exportExcel', {}, 'arraybuffer');
 
 // const exportCSV = (params) => http.get(params);
 
-const uploadFile = (url = 'uploadFile', file, isFile) => http.post('upload_excel', file, isFile);
+const uploadFile = (url = 'uploadFile', file, isFile) => http.post(url, file, isFile);
 // 上传文件
 // export const uploadFile = (url, file) => {
 //   const formData = new FormData();
@@ -44,14 +48,15 @@ const uploadFile = (url = 'uploadFile', file, isFile) => http.post('upload_excel
 
 
 export default {
-    login2,
-    update2,
-    itemMap,
-    download,
-    uploadFile,
-    getInventory,
-    getAllInventory,
-    getProductList,
-    exportExcel,
-    getBasicActiveDataByPage
+  login2,
+  update2,
+  itemMap,
+  download,
+  uploadFile,
+  getInventory,
+  getAllInventory,
+  getProductList,
+  exportExcel,
+  updatePrice,
+  getBasicActiveDataByPage
 }

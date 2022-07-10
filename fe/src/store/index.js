@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     list1: [],
     errorList1: [],
-    web1Data: []
+    web1Data: [],
+    allDataToUpdatePrice: []
   },
   getters: {
     getList1: state => state.list1,
@@ -22,10 +23,11 @@ export default new Vuex.Store({
     },
     setWeb1Data(state, web1Data) {
       state.web1Data = web1Data
+    },
+    setAllDataToUpdatePrice(state, allDataToUpdatePrice) {
+      state.allDataToUpdatePrice = allDataToUpdatePrice;
     }
   },
-  actions: {
-  },
-  modules: {
-  },
+  actions: {},
+  modules: {},
 });

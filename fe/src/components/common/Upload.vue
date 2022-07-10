@@ -1,6 +1,14 @@
 <template>
-  <div class="container">
-    <input type="file" name="" id="" @change="uploadConfig" />
+  <div>
+    <div class="container">
+      <input type="file" name="" id="" @change="uploadConfig" />
+    </div>
+    <div>
+      上传结果: <b v-bind:class="{ active: success }">{{msg}}</b>
+      <!-- <div v-if="data && data.length">
+        {{data.map(item=>item.NAME)}}
+      </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -8,23 +16,25 @@ import VXETable from "vxe-table";
 export default {
   data() {
     return {
-      fileList: [],
+      msg: "还没开始上传",
+      success: false,
+      data: [],
     };
   },
   methods: {
     uploadConfig(e) {
       let file = e.target.files[0];
       if (file) {
-        this.$api.uploadFile(null, file, true).then((res) => {
+        this.$api.uploadFile("upload_excel_price", file, true).then((res) => {
           if (res) {
             this.$message({
-              message: "上传基础数据成功",
-              type: "success",
+              message: res.msg || "上传基础数据成功",
+              type: res.success ? "success" : "error",
             });
-            console.log(res);
-            res.success && this.$store.commit("setWeb1Data", res.data);
-            // this.$store.commit("setErrorList1", res.data.errorsList);
-            // this.$store.commit("setList1", res.data.goodsList);
+            this.$store.commit("setAllDataToUpdatePrice", res.data);
+            this.msg = res.msg;
+            this.success = res.success;
+            this.data = res.data;
           }
         });
       } else {
@@ -40,6 +50,9 @@ export default {
 
 <style scoped>
 .container {
-  margin-bottom: 2rem;
+  margin: 1rem 0;
+}
+.active {
+  color: green;
 }
 </style>

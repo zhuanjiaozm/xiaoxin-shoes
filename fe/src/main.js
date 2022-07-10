@@ -1,6 +1,18 @@
 import Vue from 'vue';
 // import ElementUI from 'element-ui';
-import { TabPane, Tabs, MessageBox, Message, MenuItem, Menu, Submenu, Button, ButtonGroup } from 'element-ui';
+import {
+  TabPane,
+  Tabs,
+  MessageBox,
+  Message,
+  MenuItem,
+  Menu,
+  Submenu,
+  Button,
+  Card,
+  Progress,
+  ButtonGroup
+} from 'element-ui';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -21,6 +33,8 @@ Vue.use(MenuItem);
 Vue.use(Menu);
 Vue.use(Submenu);
 Vue.use(Button);
+Vue.use(Card);
+Vue.use(Progress);
 Vue.use(ButtonGroup);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$message = Message;
@@ -28,6 +42,7 @@ Vue.prototype.$message = Message;
 import api from '@/api/api.js'
 
 Vue.prototype.$api = api
+Vue.prototype.$VXETable = VXETable
 
 
 new Vue({

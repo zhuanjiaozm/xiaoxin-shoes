@@ -4,11 +4,15 @@ const multer = require('multer')
 const xlsx = require('xlsx');
 const fs = require('fs');
 const path = require('path');
-const upload = multer({ storage: multer.memoryStorage() }) // 上传文件使用缓存策略
+const upload = multer({
+    storage: multer.memoryStorage()
+}) // 上传文件使用缓存策略
 // 2.创建路由对象
 const router = express.Router()
 
-const { dataObject } = require('../data/2.fashiongo/dataObject.json');
+const {
+    dataObject
+} = require('../data/2.fashiongo/dataObject.json');
 
 
 var web2_controller = require('../controllers/2');
@@ -30,20 +34,72 @@ router.get('/download2', web2_controller.download);
 // 下载Excel文件
 router.get('/exportExcel', web2_controller.exportExcel);
 
+
+
+
+
+router.route("/upload_excel_price").post(upload.any(), (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.json({
+            text: '请选择文件上传'
+        })
+    }
+    const {
+        originalname,
+        buffer
+    } = req.files[0];
+    if (!originalname.endsWith('xls') && !originalname.endsWith('xlsx')) {
+        return res.json({
+            text: '请上传xls或xlsx格式的文件'
+        })
+    }
+    // 解析excel文件
+    const workbook = xlsx.read(buffer, {
+        type: "buffer"
+    })
+    const sheet = workbook.Sheets[workbook.SheetNames[0]] // 选择第一个工作簿
+    const result = xlsx.utils.sheet_to_json(sheet);
+    if (result.every(item => item.PRICE && item.NAME)) {
+        res.json({
+            success: true,
+            data: result,
+            msg: `上传的excel解析成功,总共解析出需要改价的商品共有${result.length}个商品`
+        })
+    } else {
+        res.json({
+            success: false,
+            data: result,
+            msg: `上传的excel解析失败,Excel中存在商品没有NAME或者PRICE的值(表头需要全部大写,名称必须包含NAME和PRICE)`
+        })
+    }
+})
+
+
+
+
 // 上传excel
 router.route("/upload_excel").post(upload.any(), (req, res) => {
     var goodsList = [];
     var errorsList = [];
     if (!req.files || req.files.length === 0) {
-        return res.json({ text: '请选择文件上传' })
+        return res.json({
+            text: '请选择文件上传'
+        })
     }
 
-    const { originalname, buffer } = req.files[0]
+    const {
+        originalname,
+        buffer
+    } = req.files[0]
     if (!originalname.endsWith('xls') && !originalname.endsWith('xlsx')) {
-        return res.json({ text: '请上传xls或xlsx格式的文件' })
+        return res.json({
+            text: '请上传xls或xlsx格式的文件'
+        })
     }
     // 解析excel文件
-    const workbook = xlsx.read(buffer, { type: "buffer" })
+    const workbook = xlsx.read(buffer, {
+        type: "buffer"
+    })
     const sheet = workbook.Sheets[workbook.SheetNames[0]] // 选择第一个工作簿
     const result = xlsx.utils.sheet_to_json(sheet)
     const resultArray = {};
@@ -76,8 +132,7 @@ router.route("/upload_excel").post(upload.any(), (req, res) => {
     // })
     return res.json({
         success: true,
-        data: [
-            {
+        data: [{
                 label: `1/2 匹配ID成功  ${goodsList.length}  条`,
                 data: goodsList,
                 type: 'success'
@@ -90,6 +145,9 @@ router.route("/upload_excel").post(upload.any(), (req, res) => {
         ]
     })
 })
+
+router.post('/updatePrice', web2_controller.updatePrice);
+
 
 // 4.向外导出路由对象
 module.exports = router;

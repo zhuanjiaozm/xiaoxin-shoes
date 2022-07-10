@@ -18,6 +18,7 @@ const moment = require('moment');
 const {
     dataObject
 } = require('../data/2.fashiongo/dataObject.json');
+const app = require('../app');
 let idsIndex = 0;
 const errorList = [];
 const json_to_sheet = (arr) => {
@@ -519,8 +520,17 @@ const web2_controller = {
             })
         }
 
-    }
+    },
 
+    updatePrice: (req, res) => {
+        console.log('====================================');
+        console.log('服务端需要更新:', req.body.allDataToUpdatePrice.length);
+        console.log('====================================');
+        res.send({
+            success: true,
+            data: req.body.allDataToUpdatePrice
+        });
+    }
 };
 
 module.exports = web2_controller;

@@ -187,7 +187,7 @@ const handleData = async (req, res) => {
         }).catch(err => {
             console.log('分页获取激活的商品列表发生错误: ', err);
             console.log('');
-        }).finally(() => {});
+        }).finally(() => { });
         return p;
     });
     const promiseArray2 = await pages2.map(pn => {
@@ -211,7 +211,7 @@ const handleData = async (req, res) => {
         }).catch(err => {
             console.log('分页获取未激活的商品列表发生错误: ', err);
             console.log('');
-        }).finally(() => {});
+        }).finally(() => { });
         return p;
     });
     Promise.all([...promiseArray1, ...promiseArray2]).then((values) => {
@@ -309,13 +309,13 @@ const web2_controller = {
         console.log('data2.length: ', data2.length);
 
         var buffer = nodeXlsx.build([{
-                name: `商品列表--${data.length - 1}条数据`,
-                data: data
-            },
-            {
-                name: `库存列表--${data2.length - 1}条数据`,
-                data: data2
-            },
+            name: `商品列表--${data.length - 1}条数据`,
+            data: data
+        },
+        {
+            name: `库存列表--${data2.length - 1}条数据`,
+            data: data2
+        },
         ]);
         const fileName = path.resolve(__dirname, '../jobs/data2/allItems.xlsx');
         //写入文件
@@ -341,7 +341,6 @@ const web2_controller = {
             })
         })
     },
-
 
     getProductList: (req, res) => {
         const allGoodsInventoryArrayFile = path.resolve(__dirname, '../jobs/data2/allGoodsInventoryArray.json');
@@ -415,8 +414,6 @@ const web2_controller = {
         handleData(req, res);
     },
 
-
-
     update: (req, res) => {
         const data = require('./products.json');
         console.log(data.length);
@@ -477,8 +474,13 @@ const web2_controller = {
                 });;
             } else {
                 console.log('更新价格完成');
-                var content = JSON.stringify(errorList);
-                console.log(errorList);
+                var content = JSON.stringify(errorList.sort(function (a, b) {
+                    var x = a.productName.toLowerCase();
+                    var y = b.productName.toLowerCase();
+                    if (x < y) { return -1; }
+                    if (x > y) { return 1; }
+                    return 0;
+                }));
                 var file = path.join(__dirname, './data/第2个网站更新失败记录.json');
                 //写入文件
                 fs.writeFile(file, content, function (err) {

@@ -49,7 +49,7 @@ const router = require('./router')
 
 const app = express()
 var expressWs = require('express-ws')(app);
-const port = 3000;
+const port = 3001;
 
 var whitelist = ['http://localhost:8080', 'http://fengziqiao.xyz', 'http://xx.fengziqiao.xyz', 'http://awsus.fengziqiao.xyz', undefined]
 var corsOptions = {

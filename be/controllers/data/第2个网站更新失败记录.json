@@ -1,134 +1,80 @@
 [
     {
-        "errorMessage": "颜色不匹配：BLACK NUBUCK",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/11804696",
-        "productId": 11804696,
-        "productName": "FL-GROWTH-03"
+        "errorMessage": "颜色不匹配：BLUSH",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/10964061",
+        "productId": 10964061,
+        "productName": "FL-DESIGN-08K"
     },
     {
-        "errorMessage": "颜色不匹配：SILVER GREY",
+        "errorMessage": "颜色不匹配：PINK",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13646171",
+        "productId": 13646171,
+        "productName": "FL-DORIT-69"
+    },
+    {
+        "errorMessage": "颜色不匹配：OLVIE",
         "URL": "https://vendoradmin.fashiongo.net/#/item/detail/12431994",
         "productId": 12431994,
         "productName": "FL-FLOW-19"
     },
     {
-        "errorMessage": "颜色不匹配：IVORY PU",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/12602405",
-        "productId": 12602405,
-        "productName": "TG-MONROE-1"
-    },
-    {
-        "errorMessage": "颜色不匹配：BLACK",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/12602438",
-        "productId": 12602438,
-        "productName": "TG-Norah-1"
-    },
-    {
-        "errorMessage": "颜色不匹配：NUDE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/12603430",
-        "productId": 12603430,
-        "productName": "TG-Phase-7K"
-    },
-    {
         "errorMessage": "颜色不匹配：RED",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/12969259",
-        "productId": 12969259,
-        "productName": "TG-Lucy-1"
-    },
-    {
-        "errorMessage": "颜色不匹配：BLACK PU",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13007421",
-        "productId": 13007421,
-        "productName": "TG-Lucy-86"
-    },
-    {
-        "errorMessage": "颜色不匹配：SILVER GREY",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13399657",
-        "productId": 13399657,
-        "productName": "FL-FLOW-19K"
-    },
-    {
-        "errorMessage": "颜色不匹配：TAN",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13459527",
-        "productId": 13459527,
-        "productName": "TG-Claire-1"
-    },
-    {
-        "errorMessage": "颜色不匹配：NUDE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13631655",
-        "productId": 13631655,
-        "productName": "TG-Brazil-72"
-    },
-    {
-        "errorMessage": "颜色不匹配：TAN",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13631655",
-        "productId": 13631655,
-        "productName": "TG-Brazil-72"
-    },
-    {
-        "errorMessage": "颜色不匹配：WINE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13631706",
-        "productId": 13631706,
-        "productName": "TG-Brazil-1"
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13440543",
+        "productId": 13440543,
+        "productName": "FL-FLOW-30"
     },
     {
         "errorMessage": "颜色不匹配：LIGHT BLUE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13667318",
-        "productId": 13667318,
-        "productName": "TG-Rowen-75K"
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15120669",
+        "productId": 15120669,
+        "productName": "FL-HANA-48"
     },
     {
-        "errorMessage": "颜色不匹配：WHITE WHITE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/13693826",
-        "productId": 13693826,
-        "productName": "TG-Lizzo-1"
+        "errorMessage": "颜色不匹配：LAVENDER",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15120669",
+        "productId": 15120669,
+        "productName": "FL-HANA-48"
     },
     {
-        "errorMessage": "颜色不匹配：TAN",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15822404",
-        "productId": 15822404,
-        "productName": "FL-BRETTY-18"
+        "errorMessage": "颜色不匹配：LIGHT BLUE",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15924683",
+        "productId": 15924683,
+        "productName": "FL-HANA-48K"
     },
     {
-        "errorMessage": "颜色不匹配：BLACK",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/16370008",
-        "productId": 16370008,
-        "productName": "FL-YULA-18"
-    },
-    {
-        "errorMessage": "颜色不匹配：NUDE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/16370008",
-        "productId": 16370008,
-        "productName": "FL-YULA-18"
+        "errorMessage": "颜色不匹配：LAVENDER",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15924683",
+        "productId": 15924683,
+        "productName": "FL-HANA-48K"
     },
     {
         "errorMessage": "颜色不匹配：RED",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/16370008",
-        "productId": 16370008,
-        "productName": "FL-YULA-18"
-    },
-    {
-        "errorMessage": "颜色不匹配：NUDE",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/16469962",
-        "productId": 16469962,
-        "productName": "TG-DARCIE-99"
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/15242213",
+        "productId": 15242213,
+        "productName": "FL-LIMITED-96"
     },
     {
         "errorMessage": "颜色不匹配：BLACK PATENT",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/17072489",
-        "productId": 17072489,
-        "productName": "TG-RIM-1"
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/8716428",
+        "productId": 8716428,
+        "productName": "FL-LORIS-28"
     },
     {
-        "errorMessage": "颜色不匹配：BLACK CROCO",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/17072489",
-        "productId": 17072489,
-        "productName": "TG-RIM-1"
+        "errorMessage": "颜色不匹配：SILVER",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/17288126",
+        "productId": 17288126,
+        "productName": "FL-REBOUND-11K"
+    },
+    {
+        "errorMessage": "颜色不匹配：TAUPE",
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/16224317",
+        "productId": 16224317,
+        "productName": "FL-REGULAR-70K"
     },
     {
         "errorMessage": "颜色不匹配：TAN",
-        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/17089519",
-        "productId": 17089519,
-        "productName": "TG-SKITTLE-26"
+        "URL": "https://vendoradmin.fashiongo.net/#/item/detail/14354771",
+        "productId": 14354771,
+        "productName": "FL-REWARD-15K"
     }
 ]
